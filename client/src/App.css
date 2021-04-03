@@ -1,38 +1,130 @@
-.App {
-  text-align: center;
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@500&display=swap');
+
+*{
+  padding: 0;
+  margin: 0;
+  box-sizing: border-box;
 }
 
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
+:root{
+  --primary:#C7D3D4FF;
+  --secondary:#603F83FF;
 }
 
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
-  }
+body{
+  background:var(--primary);
+  font-family: 'Montserrat', sans-serif;
 }
 
-.App-header {
-  background-color: #282c34;
-  min-height: 100vh;
+.nav{
+  background:var(--primary);
+  height:8vh;
+  padding:1rem;
+  width: 100%;
+  z-index: 1;
+  position: fixed;
+  bottom:0;
+  box-shadow: 0 -1px 1px rgba(0,0,0,0.12), 
+  0 -2px 2px rgba(0,0,0,0.12), 
+  0 -4px 4px rgba(0,0,0,0.12); 
+}
+
+.nav .nav-items{
+ display: flex;
+ align-items:center;
+ justify-content: space-around;
+ height:100%;
+ width: 100%;
+ margin:0;
+ padding:0;
+}
+
+.nav .nav-item{
+ list-style: none;
+ color: var(--secondary);
+}
+
+.nav-link{
+  text-decoration: none;
   display: flex;
   flex-direction: column;
-  align-items: center;
   justify-content: center;
-  font-size: calc(10px + 2vmin);
-  color: white;
+  align-items: center;
 }
 
-.App-link {
-  color: #61dafb;
+.landing__page__container{
+  padding: 0.5rem;
+  margin-bottom: 4rem;
 }
 
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
+.landing__page__headings{
+  color: var(--secondary);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin: 1rem 0;
+}
+
+.landing__page__headings .seeall__btn{
+  background: none;
+  color: var(--secondary);
+  border:none;
+  cursor: pointer;
+  margin-right: 1rem;
+  font-weight: bold;
+}
+
+.seeAllVideos__container{
+   margin-bottom: 3rem;
+}
+
+.seeAllVideos__container__header{
+  margin: 0.5rem;
+  color: var(--secondary);
+  text-align: center;
+  border-bottom: 2px solid var(--secondary);
+}
+
+.cards{
+  display:grid;
+  justify-content:center;
+  grid-gap: 20px;
+  grid-template-columns:repeat(auto-fill, 300px)
+}
+
+.cards .card{
+  width: 300px;
+  height:240px;
+}
+
+@media (max-width: 640px){
+  .seeAllVideos__container .cards{
+    grid-template-columns:1fr;
   }
-  to {
-    transform: rotate(360deg);
+  .seeAllVideos__container .card{
+    width: 100%;
   }
+}
+
+.card__footer{
+  display: flex;
+}
+
+.primary-btn{
+  background:none;
+  padding: 0.3rem;
+  border: 1px solid var(--secondary);
+  border-radius:10px;
+  color:var(--secondary);
+  cursor: pointer;
+}
+
+.secondary-btn{
+  background:var(--secondary);
+  padding: 0.3rem;
+  border: 1px solid var(--primary);
+  border-radius:10px;
+  color: var(--primary);
+  cursor: pointer;
+  margin-left: 0.3rem;
 }
