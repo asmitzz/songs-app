@@ -1,4 +1,5 @@
 @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@500&display=swap');
+@import url("https://easy-ui.netlify.app/library.css");
 
 *{
   padding: 0;
@@ -49,6 +50,7 @@ body{
   display: flex;
   flex-direction: column;
   justify-content: center;
+  color: var(--secondary);
   align-items: center;
 }
 
@@ -95,6 +97,7 @@ body{
 .cards .card{
   width: 300px;
   height:240px;
+  margin: 0;
 }
 
 @media (max-width: 640px){
@@ -108,6 +111,7 @@ body{
 
 .card__footer{
   display: flex;
+  justify-content: space-between;
 }
 
 .primary-btn{
@@ -126,5 +130,60 @@ body{
   border-radius:10px;
   color: var(--primary);
   cursor: pointer;
-  margin-left: 0.3rem;
+}
+
+.playlist__container{
+  padding: 1rem;
+}
+
+.playlist__container__header{
+  color: var(--secondary);
+  text-align: center;
+}
+
+.modal{
+  width:100%;
+  height: 100vh;
+  position: absolute;
+  top: 0;
+  left: 0;
+  z-index: 2;
+}
+
+.playlist__input{
+   border: none;
+   background:transparent;
+   border-bottom: 2px solid var(--primary);
+   color: var(--primary);
+   padding: 0.3rem;
+}
+
+.playlist__container .modal-header,.modal-body,.modal-footer{
+  background-color: var(--secondary);
+  color: var(--primary)
+}
+
+.modal-dismiss{
+  padding: 0.1rem 0.4rem;
+}
+
+.playlist__container .invalid-feedback{
+  display:block;
+  text-align:center;
+}
+
+.playlist{
+  padding: 0;
+  margin: 0;
+}
+
+.playlist__item{
+   cursor: pointer;
+   margin: 0.5rem;
+   list-style: none;
+}
+
+.playlist__item__link{
+  text-decoration: none;
+  color: var(--secondary);
 }

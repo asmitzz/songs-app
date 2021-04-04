@@ -33,5 +33,7 @@ export const VideosData = {
         { id:'2bVo3ID_UpU',url:"https://www.youtube.com/embed/2bVo3ID_UpU",title:'Tuhi Meri Shab Hai ',releasedDate:'2000' },
         { id:'BadBAMnPX0I',url:"https://www.youtube.com/embed/BadBAMnPX0I",title:'Pehli Nazar Mein ',releasedDate:'Jul 28, 2012' },
         { id:'b0v-X9pcSos',url:"https://www.youtube.com/embed/b0v-X9pcSos",title:'AADAT - NINJA | PARMISH VERMA',releasedDate:'Jul 22, 2015' },
-    ]
+    ],
+    watchLater:[],
+    history:[] 
 }

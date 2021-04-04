@@ -10,10 +10,10 @@ const BottomNavbar = () => {
                <Link to="/" className="nav-link"><i className="fa fa-home"></i><small>Home</small></Link>
             </li>
             <li className="nav-item">
-               <Link className="nav-link"><i className="fa fa-music" aria-hidden="true"></i><small>My playlist</small></Link>
+               <Link to="/playlist" className="nav-link"><i className="fa fa-music" aria-hidden="true"></i><small>My playlist</small></Link>
             </li>
             <li className="nav-item">
-               <Link className="nav-link"><i className="fas fa-clock" aria-hidden="true"></i><small>Watch later</small></Link>
+               <Link to={{ pathname:"/videos/watchLater",state:{title:"Watch Later"} }} className="nav-link"><i className="fas fa-clock" aria-hidden="true"></i><small>Watch later</small></Link>
             </li>
             <li className="nav-item">
                <Link className="nav-link"><i className="fa fa-history" aria-hidden="true"></i><small>History</small></Link>
