@@ -18,7 +18,7 @@ const LandingPage = ({history}) => {
 
     const {state} = useVideos();
 
-    const { trending,Bollywood,EnglishTopSongs,Hindi90s,Hindi2000s } = state.allVideos;
+    const { trending,Bollywood,EnglishTopSongs,Hindi90s,Hindi2000s } = state;
   
     return (
         <div className="landing__page__container">

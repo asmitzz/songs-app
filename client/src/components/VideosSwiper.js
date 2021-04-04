@@ -11,9 +11,7 @@ const VideosSwiper = ({title,pathname,videosArray,history}) => {
 
   const {state,dispatch} = useVideos();
 
-  const {watchLater} = state.allVideos;
-
-  const {playlist,selectedPlaylist} = state;
+  const {playlist,selectedPlaylist,watchLater} = state;
 
   const AddToWatchLater = (video) => {
       const findVideo = watchLater.find( v => v.id === video.id);
@@ -23,7 +21,15 @@ const VideosSwiper = ({title,pathname,videosArray,history}) => {
   }
 
   const AddToPlaylist = (video) => {
-     dispatch({type:"ADD_TO_PLAYLIST",payload:video,playlist:selectedPlaylist})
+     if(selectedPlaylist === null) return;
+     dispatch({type:"ADD_TO_PLAYLIST",payload:video,playlist:selectedPlaylist.id});
+     dispatch({type:"CURRENT_PLAYLIST",payload:selectedPlaylist.id});
+  }
+
+  const checkInPL = (id) => {
+     if(selectedPlaylist && selectedPlaylist.playlist.find( v => v.id === id)){
+       return true;
+     }
   }
 
     return (
@@ -60,11 +66,11 @@ const VideosSwiper = ({title,pathname,videosArray,history}) => {
                          </button>
                          
                          <div>
-                         <button className="secondary-btn" onClick={() => AddToPlaylist(video) }>
-                           <i className="fa fa-music" aria-hidden="true"></i> Add to
+                         <button className="secondary-btn" disabled={checkInPL(video.id)} onClick={() => AddToPlaylist(video) }>
+                           <i className="fa fa-music" aria-hidden="true"></i> {checkInPL(video.id) ? "Added to" : "Add to"}
                         </button>
-                         <select className="playlist__selector primary-btn" value={selectedPlaylist} onChange={(e) => dispatch({type:"CHANGE_SELECTED_PLAYLIST",payload:e.target.value})}>
-                            <option>none</option>
+                         <select className="playlist__selector primary-btn" value={selectedPlaylist ? selectedPlaylist.id : "none"} onChange={(e) => dispatch({type:"CURRENT_PLAYLIST",payload:e.target.value})}>
+                            <option value="none">none</option>
                             {
                               playlist.map( list => (
                                 <option key={list.id} value={list.id}>{list.name}</option>

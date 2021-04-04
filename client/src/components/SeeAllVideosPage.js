@@ -14,7 +14,7 @@ const SeeAllVideosPage = () => {
     const {type,id} = useParams();
     
     const title = useLocation().state.title;
-    const {watchLater} = state.allVideos;
+    const {watchLater,playlist,selectedPlaylist} = state;
 
 
     const getVideos = () => {
@@ -22,7 +22,7 @@ const SeeAllVideosPage = () => {
            const findPlaylist = state.playlist.find( list => list.id === id );
            return findPlaylist.playlist;
         }
-        return state.allVideos[type];
+        return state[type];
     }
 
     const videos = getVideos();
@@ -33,6 +33,23 @@ const SeeAllVideosPage = () => {
   
         return dispatch({type:"ADD_TO_WATCH_LATER",payload:video});
     }
+
+    const RemoveFromPlaylist = (videoId) => {
+        dispatch({type:"REMOVE_FROM_PLAYLIST",payload:videoId,playlist:id});
+        dispatch({type:"CURRENT_PLAYLIST",payload:selectedPlaylist.id});
+    }
+
+    const AddToPlaylist = (video) => {
+        if(selectedPlaylist === null) return;
+        dispatch({type:"ADD_TO_PLAYLIST",payload:video,playlist:selectedPlaylist.id});
+        dispatch({type:"CURRENT_PLAYLIST",payload:selectedPlaylist.id});
+     }
+
+    const checkInPL = (id) => {
+        if(selectedPlaylist && selectedPlaylist.playlist.find( v => v.id === id)){
+          return true;
+        }
+     }
 
     return (
         <div className="seeAllVideos__container">
@@ -48,7 +65,23 @@ const SeeAllVideosPage = () => {
                         <button className="primary-btn" onClick={() => AddToWatchLater(video)}><i className="fas fa-clock" aria-hidden="true"></i>
                            {watchLater.find( v => v.id === video.id) ? " Remove from watchlist" : " Watch later"}
                          </button>
-                         <button onClick={ () => dispatch({type:"REMOVE_FROM_PLAYLIST",payload:video.id}) } className="secondary-btn"><i className="fa fa-music" aria-hidden="true"></i> { type === "playlist" ? "Remove from playlist" :"Add to playlist"}</button>
+                         
+                         { type !== "playlist" && <div>
+                         <button className="secondary-btn" disabled={checkInPL(video.id)} onClick={() => AddToPlaylist(video) }>
+                           <i className="fa fa-music" aria-hidden="true"></i> {checkInPL(video.id) ? "Added to" : "Add to"}
+                        </button>
+
+                          <select className="playlist__selector primary-btn" value={selectedPlaylist ? selectedPlaylist.id : "none"} onChange={(e) => dispatch({type:"CURRENT_PLAYLIST",payload:e.target.value})}>
+                            <option value="none">none</option>
+                            {
+                              playlist.map( list => (
+                                <option key={list.id} value={list.id}>{list.name}</option>
+                              ))
+                            }
+                         </select>
+                         </div>}
+
+                         { type === "playlist" && <button onClick={ () => RemoveFromPlaylist(video.id) } className="secondary-btn"><i className="fa fa-music" aria-hidden="true"></i> { type === "playlist" ? "Remove from playlist" :"Add to playlist"}</button>}
                        </div>
                     </div>
                 ))
