@@ -28,20 +28,25 @@ const PlayListPage = () => {
   return (
     <div className="playlist__container">
         <h2 className="playlist__container__header"><i className="fa fa-music"></i> My Playlist</h2>
-        <ol className="playlist">
-      { 
-         state.playlist.map( (item,i) => (
-            <li className="playlist__item" key={item.id}>
-                <Link className="playlist__item__link" to={{ pathname:`/videos/playlist/${item.id}`,state:{title:item.name} }}>{i+1}. {item.name}</Link>
-                <i onClick={ () => dispatch({type:"REMOVE_PLAYLIST",payload:item.id}) } className="fa fa-trash ml-2 text-danger"></i>
-            </li>
-         ) )
-      }
-      </ol>
 
-      <button className="primary-btn" onClick={() => setShow(true)}>
+        <button className="primary-btn create__btn" onClick={() => setShow(true)}>
         <i className="fa fa-plus"></i> Create New Playlist
       </button>
+      
+        <div className="playlist">
+      { 
+         state.playlist.map( (item,i) => (
+                  <div className="playlist__item" key={item.id}>
+                    <i onClick={ () => dispatch({type:"REMOVE_PLAYLIST",payload:item.id}) } className="fa fa-trash ml-2 text-danger deleteIcon"></i>
+                    <span>{item.name.toUpperCase()}</span>
+                    <small>{item.playlist.length} Videos</small>
+                    <Link className="playlist__item__link" to={{ pathname:`/videos/playlist/${item.id}`,state:{title:item.name} }}>View Playlist</Link>
+                  </div>
+         ) )
+      }
+      </div>
+
+      
 
      
 

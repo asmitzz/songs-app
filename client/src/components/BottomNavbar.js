@@ -16,7 +16,7 @@ const BottomNavbar = () => {
                <Link to={{ pathname:"/videos/watchLater",state:{title:"Watch Later"} }} className="nav-link"><i className="fas fa-clock" aria-hidden="true"></i><small>Watch later</small></Link>
             </li>
             <li className="nav-item">
-               <Link className="nav-link"><i className="fa fa-history" aria-hidden="true"></i><small>History</small></Link>
+               <Link to={{ pathname:"/videos/history",state:{title:"History"} }} className="nav-link"><i className="fa fa-history" aria-hidden="true"></i><small>History</small></Link>
             </li>
           </ul>
        </nav>
