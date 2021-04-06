@@ -1,6 +1,7 @@
 import React,{useEffect} from 'react';
 
 import { useParams,useLocation } from 'react-router';
+import ReactPlayer from "react-player";
 
 import { useVideos } from '../contexts/VideosContextProvider';
 
@@ -36,14 +37,20 @@ const SeeAllVideosPage = () => {
 
     const RemoveFromPlaylist = (videoId) => {
         dispatch({type:"REMOVE_FROM_PLAYLIST",payload:videoId,playlist:id});
-        dispatch({type:"CURRENT_PLAYLIST",payload:selectedPlaylist.id});
+        dispatch({type:"CURRENT_PLAYLIST",payload:"none"});
     }
 
     const AddToPlaylist = (video) => {
         if(selectedPlaylist === null) return;
         dispatch({type:"ADD_TO_PLAYLIST",payload:video,playlist:selectedPlaylist.id});
-        dispatch({type:"CURRENT_PLAYLIST",payload:selectedPlaylist.id});
+        dispatch({type:"CURRENT_PLAYLIST",payload:"none"});
      }
+
+     const addToHistory = (video) => {
+      const checkvideo = state.history.find((v) => v.id === video.id);
+      if (checkvideo) return;
+      dispatch({ type: "ADD_TO_HISTORY", payload: video });
+    };
 
     const checkInPL = (id) => {
         if(selectedPlaylist && selectedPlaylist.playlist.find( v => v.id === id)){
@@ -58,7 +65,7 @@ const SeeAllVideosPage = () => {
             {
                 videos.map( video => (
                     <div className="card" key={video.id}>
-                        <iframe height="70%" width="100%" src={video.url} title={video.title}/>
+                        <ReactPlayer url={video.url} onPlay={() => addToHistory(video)} width="100%" height="100%"/>
                         <h4>{video.title}</h4>
                         <small>Released date : {video.releasedDate}</small>
                         <div className="card__footer">
