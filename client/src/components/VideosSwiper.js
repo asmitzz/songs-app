@@ -57,7 +57,7 @@ const VideosSwiper = ({title,pathname,videosArray,history}) => {
               {
                  videosArray.map( video => (
                  <SwiperSlide key={video.id} >
-                       <iframe title="youtube media player" width="100%" height="100%" src={video.url} />
+                       <iframe allowFullScreen title="youtube media player" width="100%" height="100%" src={video.url} />
                        <h4>{video.title}</h4>
                        <small>Released date : {video.releasedDate}</small>
                        <div className="card__footer">
