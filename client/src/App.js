@@ -1,7 +1,8 @@
-import { BrowserRouter as Router,Route,Switch } from 'react-router-dom';
+import { Route,Routes } from 'react-router-dom';
 import './App.css';
 import BottomNavbar from './components/BottomNavbar';
 import LandingPage from './components/LandingPage';
+import WatchVideo from './components/WatchVideo';
 import PlayListPage from './components/PlayListPage';
 import SeeAllVideosPage from './components/SeeAllVideosPage';
 
@@ -9,15 +10,13 @@ import SeeAllVideosPage from './components/SeeAllVideosPage';
 const App = () => {
   return (
     <div>
-        <Router>
-          <Switch>
-            <Route path="/" exact component={LandingPage}/>
-            <Route path="/videos/:type/" exact component={SeeAllVideosPage}/>
-            <Route path="/videos/:type/:id" exact component={SeeAllVideosPage}/>
-            <Route path="/playlist" exact component={PlayListPage}/>
-          </Switch>
+          <Routes>
+            <Route path="/" element={<LandingPage/>}/>
+            <Route path="/watch/:videoID" element={<WatchVideo/>}/>
+            <Route path="/videos/:type" element={<SeeAllVideosPage/>}/>
+            <Route path="/playlist" element={<PlayListPage/>}/>
+          </Routes>
           <BottomNavbar/>
-        </Router>
     </div>
       
   );

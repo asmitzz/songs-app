@@ -1,5 +1,4 @@
 import React, { createContext, useContext, useReducer } from 'react';
-import { VideosData } from '../VideosData';
 
 export const VideosContext = createContext();
 
@@ -28,7 +27,7 @@ export const VideosContextProvider = ({children}) => {
         }
     }
 
-    const [state, dispatch] = useReducer(VideosReducer, {...VideosData,playlist:[],selectedPlaylist:null });
+    const [state, dispatch] = useReducer(VideosReducer, {playlist:[],selectedPlaylist:null });
 
     return (
         <VideosContext.Provider value={{state,dispatch}}>
