@@ -16,7 +16,7 @@ const VideosSwiper = ({ type, videos }) => {
       </div>
 
       <Swiper
-        spaceBetween={50}
+        spaceBetween={0}
         breakpoints={{
           300: {
             width: 300,
@@ -25,16 +25,16 @@ const VideosSwiper = ({ type, videos }) => {
 
           768: {
             width: 768,
-            slidesPerView: 2.5,
+            slidesPerView: 2.6,
           },
         }}
         navigation
       >
         { videos.map((video) => (
           <SwiperSlide key={video.id} className="thumbnail">
-               <Link to={`/watch/${video.id}`} state={{videos}} className="thumbnail__link">
+               <Link to={`/watch/${video.id}`} state={{type:"Related videos",videos}} className="thumbnail__link">
                   <div>
-                    <img width="320px" height="100%" src={video.thumbnail} alt="thumbnail"/>
+                    <img width="280px" height="100%" src={video.thumbnail} alt="thumbnail"/>
                     <h4>{video.title}</h4>
                     <small>Released date : {video.releasedDate}</small>
                   </div>

@@ -14,23 +14,41 @@ export const VideosContextProvider = ({children}) => {
             return {...state,playlist:[...state.playlist,action.payload]};
             case "REMOVE_PLAYLIST":
             return {...state,playlist:state.playlist.filter( list => list.id !== action.payload )};
-            case "CURRENT_PLAYLIST":
-            return action.payload !== "none" ? {...state,selectedPlaylist:state.playlist.find( list => list.id === action.payload) } : {...state,selectedPlaylist:null};
             case "ADD_TO_PLAYLIST":
-            return {...state,playlist:state.playlist.map( list => list.id === action.playlist ? {...list,playlist:[...list.playlist,action.payload]} : list )};
+            return {...state,playlist:state.playlist.map( list => list.id === action.payload.playlistID ? {...list,videos:[...list.videos,action.payload.video]} : list )}
             case "REMOVE_FROM_PLAYLIST":
-            return {...state,playlist:state.playlist.map( list => list.id === action.playlist ? {...list,playlist:list.playlist.filter( v => v.id !== action.payload )} : list) };
+            return {...state,playlist:state.playlist.map( list => list.id === action.payload.playlistID ? {...list,videos:list.videos.filter( v => v.id !== action.payload.videoID)} : list )}
             case "ADD_TO_HISTORY":
             return {...state, history:[action.payload,...state.history]}
+            case "REMOVE_FROM_HISTORY":
+            return {...state, history:state.history.filter( v => v.id !== action.payload)}
             default:
             return state;
         }
     }
 
-    const [state, dispatch] = useReducer(VideosReducer, {playlist:[],watchLater:[],history:[],selectedPlaylist:null });
+    const [{playlist,watchLater,history}, dispatch] = useReducer(VideosReducer, {playlist:[],watchLater:[],history:[],selectedPlaylist:null });
+
+    const addToWatchLater = (video) => {
+        if( watchLater.find( v => v.id === video.id) ){
+          return dispatch({type:"REMOVE_FROM_WATCH_LATER",payload:video.id});
+        };
+        dispatch({type:"ADD_TO_WATCH_LATER",payload:video});
+    }
+
+    const addVideoToPlaylist = (video,playlistID,playlistIndex) => {
+        if( playlist[playlistIndex].videos.find( v => v.id === video.id) ){
+          return dispatch({type:"REMOVE_FROM_PLAYLIST",payload:{videoID:video.id,playlistID}});
+        };
+        dispatch({type:"ADD_TO_PLAYLIST",payload:{video,playlistID}});
+    }
+
+    const addToHistory = (video) => {
+        dispatch({type:"ADD_TO_HISTORY",payload:video});
+    }
 
     return (
-        <VideosContext.Provider value={{state,dispatch}}>
+        <VideosContext.Provider value={{watchLater,history,userPlaylists:playlist,addToWatchLater,addToHistory,addVideoToPlaylist,dispatch}}>
            {children}
         </VideosContext.Provider>
     );

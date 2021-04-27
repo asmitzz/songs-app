@@ -1,8 +1,11 @@
 import React from 'react';
 
 import { Link } from 'react-router-dom';
+import {useVideos} from "../contexts/VideosContextProvider";
 
 const BottomNavbar = () => {
+    const {watchLater,history} = useVideos();
+
     return (
         <nav className="nav nav-bottom">
           <ul className="nav-items">
@@ -13,10 +16,10 @@ const BottomNavbar = () => {
                <Link to="/playlist" className="nav-link"><i className="fa fa-music" aria-hidden="true"></i><small>My playlist</small></Link>
             </li>
             <li className="nav-item">
-               <Link to={{ pathname:"/videos/watchLater",state:{title:"Watch Later"} }} className="nav-link"><i className="fas fa-clock" aria-hidden="true"></i><small>Watch later</small></Link>
+               <Link to={{pathname:`/videos/Watch%20Later`}} state={{videos:watchLater}} className="nav-link"><i className="fas fa-clock" aria-hidden="true"></i><small>Watch later</small></Link>
             </li>
             <li className="nav-item">
-               <Link to={{ pathname:"/videos/history",state:{title:"History"} }} className="nav-link"><i className="fa fa-history" aria-hidden="true"></i><small>History</small></Link>
+               <Link to={{pathname:`/videos/History`}} state={{videos:history}} className="nav-link"><i className="fa fa-history" aria-hidden="true"></i><small>History</small></Link>
             </li>
           </ul>
        </nav>

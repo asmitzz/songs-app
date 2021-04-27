@@ -14,6 +14,7 @@ const App = () => {
             <Route path="/" element={<LandingPage/>}/>
             <Route path="/watch/:videoID" element={<WatchVideo/>}/>
             <Route path="/videos/:type" element={<SeeAllVideosPage/>}/>
+            <Route path="/playlist/videos/:type" element={<SeeAllVideosPage/>}/>
             <Route path="/playlist" element={<PlayListPage/>}/>
           </Routes>
           <BottomNavbar/>

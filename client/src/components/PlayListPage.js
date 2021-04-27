@@ -10,7 +10,7 @@ const PlayListPage = () => {
   const [playlist,setPlaylist] = useState("");
   const [err,setErr] = useState("");
 
-  const {dispatch,state} = useVideos();
+  const {dispatch,userPlaylists} = useVideos();
 
   const createPlaylist = (e) => {
    e.preventDefault();
@@ -35,12 +35,12 @@ const PlayListPage = () => {
       
         <div className="playlist">
       { 
-         state.playlist.map( (item,i) => (
+          userPlaylists.map( (item,i) => (
                   <div className="playlist__item" key={item.id}>
                     <i onClick={ () => dispatch({type:"REMOVE_PLAYLIST",payload:item.id}) } className="fa fa-trash ml-2 text-danger deleteIcon"></i>
                     <span>{item.name.toUpperCase()}</span>
                     <small>{item.videos.length} Videos</small>
-                    <Link className="playlist__item__link" to={{ pathname:`/videos/playlist/${item.id}`,state:{title:item.name} }}>View Playlist</Link>
+                    <Link className="playlist__item__link" to={{pathname:`/playlist/videos/${item.name}`}} state={{videos:item.videos}}>View Playlist</Link>
                   </div>
          ) )
       }

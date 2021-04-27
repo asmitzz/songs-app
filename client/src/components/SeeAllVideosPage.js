@@ -14,7 +14,9 @@ const SeeAllVideosPage = () => {
     },[])
 
     const {type} = useParams();
-    const videos = useLocation()?.state?.videos;
+    const location = useLocation();
+    const videos = location?.state?.videos;
+    const pathname = location.pathname.slice(1,location.pathname.lastIndexOf("/"));
 
     return (
         <div className="seeAllVideos__container">
@@ -22,7 +24,7 @@ const SeeAllVideosPage = () => {
             <div className="cards">
             {
                 videos.map( video => (
-                  <Link to={`/watch/${video.id}`} state={{videos}} className="thumbnail__link">
+                  <Link to={`/watch/${video.id}`} key={video.id} state={{type:pathname === "videos" ? "Related videos" : "All Playlist videos",videos}} className="thumbnail__link">
                   <div>
                     <img width="100%" height="100%" src={video.thumbnail} alt="thumbnail"/>
                     <h4>{video.title}</h4>
