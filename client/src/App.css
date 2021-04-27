@@ -162,8 +162,8 @@ body{
 .playlist__input{
    border: none;
    background:transparent;
-   border-bottom: 2px solid var(--primary);
-   color: var(--primary);
+   border-bottom: 2px solid var(--secondary);
+   color: var(--secondary);
    padding: 0.3rem;
 }
 
@@ -192,7 +192,8 @@ body{
    margin: 0.5rem;
    list-style: none;
    height: 100px;
-   width: 150px;
+   width: fit-content;
+   padding:1rem;
    background:var(--secondary);
    color: var(--primary);
    display: flex;
@@ -297,4 +298,92 @@ body{
 .watch__video__container .right__section .video__card__content{
   display: flex;
   flex-direction: column;
+}
+
+.modal{
+  color:var(--secondary);
+  z-index: 2;
+}
+
+.modal__dialog__box{
+   display: flex;
+   flex-direction: column;
+   align-items: center;
+   background:var(--primary);
+   width: 200px;
+}
+
+.modal .modal__header{
+  display: flex;
+  justify-content:space-between;
+  align-items:center;
+  padding: 1rem;
+  width: 100%;
+}
+
+.modal .modal__content{
+   display: flex;
+   flex-direction: column;
+   border-bottom:1px solid var(--tertiary);
+   border-top:1px solid var(--tertiary);
+   width: 100%;
+   justify-content:center;
+}
+
+.modal .modal__content__item{
+  display: flex;
+  align-items:center;
+  margin-left: 2rem;
+}
+
+.modal .modal__footer{
+  display: flex;
+  justify-content:space-around;
+  align-items:center;
+  padding: 1rem;
+  width: 100%;
+}
+
+.modal .modal__footer__btn{
+   background:transparent;
+   border:none;
+   color: var(--tertiary);
+   cursor: pointer;
+}
+
+.modal .modal__dismiss__btn{
+  background: var(--primary);
+  color: var(--tertiary);
+  cursor: pointer;
+  border:none;
+}
+
+.modal .modal__dismiss__btn:hover{
+  color: var(--secondary);
+}
+
+.modal .form__label{
+  font-size:0.8rem;
+  padding:0;
+}
+
+.modal .form__control{
+  border: none;
+  border-bottom: 1px solid var(--secondary);
+  background: transparent;
+  color: var(--secondary);
+  padding:0.2rem;
+}
+
+.modal .form__control:focus{
+  outline: none;
+}
+
+.modal .form__submit{
+  background:transparent;
+  border:none;
+  color: #337AB6;
+  font-weight: 600;
+  cursor: pointer;
+  margin-top: 1rem;
 }

@@ -16,7 +16,7 @@ const PlayListPage = () => {
    e.preventDefault();
 
    if(playlist !== "") {
-       dispatch({type:"CREATE_PLAYLIST",payload:{id:nanoid(),name:playlist,playlist:[]}});
+       dispatch({type:"CREATE_PLAYLIST",payload:{id:nanoid(),name:playlist,videos:[]}});
        setPlaylist("");
        setShow(false);
    }
@@ -39,31 +39,27 @@ const PlayListPage = () => {
                   <div className="playlist__item" key={item.id}>
                     <i onClick={ () => dispatch({type:"REMOVE_PLAYLIST",payload:item.id}) } className="fa fa-trash ml-2 text-danger deleteIcon"></i>
                     <span>{item.name.toUpperCase()}</span>
-                    <small>{item.playlist.length} Videos</small>
+                    <small>{item.videos.length} Videos</small>
                     <Link className="playlist__item__link" to={{ pathname:`/videos/playlist/${item.id}`,state:{title:item.name} }}>View Playlist</Link>
                   </div>
          ) )
       }
       </div>
 
-      
-
-     
-
       { show && <div className="modal">
         <div className="modal-dialog">
-          <div className="modal-header">
+          <div className="modal-header bg-dark text-light">
             <h5 className="modal-title">Create Playlist</h5>
             <button className="modal-dismiss" onClick={() => setShow(false)}>x</button>
           </div>
-          <div className="modal-body">
+          <div className="modal-body bg-dark text-light">
              <form onSubmit={createPlaylist}>
                <label><small>Enter Name :</small> </label>
                <input type="text" className="playlist__input" value={playlist} onChange={ (e) => setPlaylist(e.target.value) }/>
                <span className="invalid-feedback">{err}</span>
              </form>
           </div>
-          <div className="modal-footer">
+          <div className="modal-footer bg-dark text-light">
             <button className="btn btn-danger" onClick={() => setShow(false)}>Cancel</button>
             <button className="btn btn-success" onClick={createPlaylist}>Ok</button>
           </div>
