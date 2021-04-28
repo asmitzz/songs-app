@@ -53,7 +53,7 @@ const WatchVideo = () => {
            </section>
 
             <section className="right__section">
-               <h3 className="right__section__heading">Related Videos</h3>
+               <h3 className="right__section__heading">All Videos</h3>
                 { 
                     videos.map( video => video.id !== videoID ?(
                         <Link key={video.id} to={{pathname:`/watch/${video.id}`}} state={{type:"Related videos",videos}} className="thumbnail__link">
