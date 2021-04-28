@@ -227,8 +227,7 @@ body{
 }
 
 .watch__video__container .video__player{
-  width:"100%";
-  height:"323px";
+  width:640px;
 }
 
 .watch__video__container .left__section{
@@ -386,4 +385,77 @@ body{
   font-weight: 600;
   cursor: pointer;
   margin-top: 1rem;
+}
+
+@media screen and (max-width:960px) {
+  .watch__video__container{
+    display: flex;
+    flex-direction: column;
+    padding-left:1rem;
+    margin:auto;
+    width: 100%;
+  }
+.watch__video__container .left__section{
+  padding-left: 0;
+  align-items: flex-start;
+  width: 100%;
+}
+
+
+.watch__video__container .right__section{
+  align-items: flex-start;
+}
+}
+
+@media screen and (max-width:690px) {
+  .watch__video__container{
+      padding:0 0.5rem;
+  }
+
+  .watch__video__container .video__player{
+    width:100vh;
+  }
+}
+
+@media screen and (max-width:690px) {
+  .watch__video__container .video__player{
+    width:90vh;
+  }
+}
+
+@media screen and (max-width:420px) {
+  .watch__video__container .video__player{
+    width:395px;
+  }
+}
+
+@media screen and (max-width:378px) {
+  .watch__video__container .video__player{
+    width:360px;
+  }
+}
+
+@media screen and (max-width:360px) {
+  .watch__video__container .video__player{
+    width:345px;
+  }
+}
+
+@media screen and (max-width:320px) {
+  .watch__video__container .video__player{
+    width:305px;
+  }
+}
+
+
+/* watch later */
+
+.delete__btn{
+  background:var(--primary);
+  border:none;
+  margin-right:0.5rem;
+  padding: 0;
+  color: var(--danger-color);
+  font-size:1.1rem;
+  cursor: pointer;
 }

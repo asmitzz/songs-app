@@ -1,11 +1,14 @@
 import { Route,Routes } from 'react-router-dom';
 import './App.css';
 import BottomNavbar from './components/BottomNavbar';
-import LandingPage from './components/LandingPage';
 import WatchVideo from './components/WatchVideo';
-import PlayListPage from './components/PlayListPage';
 import SeeAllVideosPage from './components/SeeAllVideosPage';
 
+import PlayListPage from './Pages/Playlist/PlayListPage';
+import LandingPage from './Pages/Home/LandingPage';
+import WatchLater from './Pages/Watchlater/WatchLater';
+import History from './Pages/History/History';
+import ViewPlaylist from './Pages/ViewPlaylist/ViewPlaylist';
 
 const App = () => {
   return (
@@ -16,6 +19,9 @@ const App = () => {
             <Route path="/videos/:type" element={<SeeAllVideosPage/>}/>
             <Route path="/playlist/videos/:type" element={<SeeAllVideosPage/>}/>
             <Route path="/playlist" element={<PlayListPage/>}/>
+            <Route path="/playlist/:playlistID" element={<ViewPlaylist/>}/>
+            <Route path="/watchlater" element={<WatchLater/>}/>
+            <Route path="/history" element={<History/>}/>
           </Routes>
           <BottomNavbar/>
     </div>

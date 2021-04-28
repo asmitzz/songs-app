@@ -7,7 +7,6 @@ import Backdrop from "../utils/Backdrop/Backdrop";
 
 const WatchVideo = () => {
     const {videoID} = useParams();
-    const videosType = useLocation()?.state?.type;
     const videos = useLocation()?.state?.videos;
     const video = videos?.find(v => v.id === videoID);
 
@@ -16,7 +15,7 @@ const WatchVideo = () => {
     const [createPlaylistBtn, setCreatePlaylistBtn] = useState(false);
     const [err,setErr] = useState("");
 
-    const {userPlaylists,watchLater,addToWatchLater,addToHistory,addVideoToPlaylist,dispatch} = useVideos();
+    const {userPlaylists,watchLater,handleWatchLater,addToHistory,addVideoToPlaylist,dispatch} = useVideos();
 
     const createPlaylist = (e) => {
       e.preventDefault();
@@ -36,7 +35,9 @@ const WatchVideo = () => {
 
            <section className="left__section">
               <div className="video__card">
-                 <ReactPlayer url={video.url} controls={true} className="video__player" onPlay={()=>addToHistory(video)}/>
+                 <div className="video__player">
+                 <ReactPlayer width="100%" playing={true} url={video.url} controls={true} onPlay={()=>addToHistory(video)}/>
+                 </div>
                  <h4 className="video__title">{video.title}</h4>
                  <div className="video__card__footer">
                      <div className="video__card__footer__left">
@@ -52,7 +53,7 @@ const WatchVideo = () => {
            </section>
 
             <section className="right__section">
-               <h3 className="right__section__heading">{videosType}</h3>
+               <h3 className="right__section__heading">Related Videos</h3>
                 { 
                     videos.map( video => video.id !== videoID ?(
                         <Link key={video.id} to={{pathname:`/watch/${video.id}`}} state={{type:"Related videos",videos}} className="thumbnail__link">
@@ -78,7 +79,7 @@ const WatchVideo = () => {
                     </div>
                     <div className="modal__content">
                        <div className="modal__content__item">
-                          <input type="checkbox" defaultChecked={watchLater.find(v => v.id === videoID)} onChange={() => addToWatchLater(video)} style={{cursor:"pointer"}}/>
+                          <input type="checkbox" defaultChecked={watchLater.find(v => v.id === videoID)} onChange={() => handleWatchLater(video)} style={{cursor:"pointer"}}/>
                           <label><small>Watch later</small></label>
                        </div>
 

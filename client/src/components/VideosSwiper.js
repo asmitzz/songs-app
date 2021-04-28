@@ -32,7 +32,7 @@ const VideosSwiper = ({ type, videos }) => {
       >
         { videos.map((video) => (
           <SwiperSlide key={video.id} className="thumbnail">
-               <Link to={`/watch/${video.id}`} state={{type:"Related videos",videos}} className="thumbnail__link">
+               <Link to={`/watch/${video.id}`} state={{videos}} className="thumbnail__link">
                   <div>
                     <img width="280px" height="100%" src={video.thumbnail} alt="thumbnail"/>
                     <h4>{video.title}</h4>

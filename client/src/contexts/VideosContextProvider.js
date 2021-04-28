@@ -7,7 +7,7 @@ export const VideosContextProvider = ({children}) => {
     const VideosReducer = (state,action) => {
         switch (action.type) {
             case "ADD_TO_WATCH_LATER":
-            return {...state,watchLater:[...state.watchLater,action.payload]}    
+            return {...state,watchLater:[action.payload,...state.watchLater]}    
             case "REMOVE_FROM_WATCH_LATER":
             return {...state,watchLater:state.watchLater.filter( v => v.id !== action.payload )}
             case "CREATE_PLAYLIST":
@@ -29,7 +29,7 @@ export const VideosContextProvider = ({children}) => {
 
     const [{playlist,watchLater,history}, dispatch] = useReducer(VideosReducer, {playlist:[],watchLater:[],history:[],selectedPlaylist:null });
 
-    const addToWatchLater = (video) => {
+    const handleWatchLater = (video) => {
         if( watchLater.find( v => v.id === video.id) ){
           return dispatch({type:"REMOVE_FROM_WATCH_LATER",payload:video.id});
         };
@@ -43,12 +43,23 @@ export const VideosContextProvider = ({children}) => {
         dispatch({type:"ADD_TO_PLAYLIST",payload:{video,playlistID}});
     }
 
+    const removeVideoFromPlaylist = (videoID,playlistID) => {
+        dispatch({type:"REMOVE_FROM_PLAYLIST",payload:{videoID,playlistID}});
+    }
+
     const addToHistory = (video) => {
+        if( history.find( v => v.id === video.id) ){
+           dispatch({type:"REMOVE_FROM_HISTORY",payload:video.id});
+        }
         dispatch({type:"ADD_TO_HISTORY",payload:video});
     }
 
+    const removeFromHistory = (videoID) => {
+        dispatch({type:"REMOVE_FROM_HISTORY",payload:videoID});
+    }
+
     return (
-        <VideosContext.Provider value={{watchLater,history,userPlaylists:playlist,addToWatchLater,addToHistory,addVideoToPlaylist,dispatch}}>
+        <VideosContext.Provider value={{watchLater,history,userPlaylists:playlist,handleWatchLater,addToHistory,removeFromHistory,addVideoToPlaylist,removeVideoFromPlaylist,dispatch}}>
            {children}
         </VideosContext.Provider>
     );
