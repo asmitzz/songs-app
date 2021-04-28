@@ -83,7 +83,7 @@ body{
 }
 
 .seeAllVideos__container{
-   margin-bottom: 3rem;
+   margin-bottom: 4rem;
 }
 
 .seeAllVideos__container__header{
@@ -223,11 +223,11 @@ body{
 .watch__video__container{
    display: grid;
    grid-template-columns: 1.4fr 1fr;
-   margin-bottom: 2rem;
 }
 
 .watch__video__container .video__player{
   width:640px;
+  height:330px;
 }
 
 .watch__video__container .left__section{
@@ -387,12 +387,12 @@ body{
   margin-top: 1rem;
 }
 
-@media screen and (max-width:960px) {
+ @media screen and (max-width:960px) {
   .watch__video__container{
     display: flex;
     flex-direction: column;
     padding-left:1rem;
-    margin:auto;
+    margin-bottom: 3rem;
     width: 100%;
   }
 .watch__video__container .left__section{
@@ -407,43 +407,43 @@ body{
 }
 }
 
-@media screen and (max-width:690px) {
+@media screen and (max-width:670px) {
   .watch__video__container{
       padding:0 0.5rem;
+      margin-bottom: 4rem;
   }
-
   .watch__video__container .video__player{
-    width:100vh;
-  }
-}
-
-@media screen and (max-width:690px) {
-  .watch__video__container .video__player{
-    width:90vh;
+     width: 550px;  
   }
 }
 
-@media screen and (max-width:420px) {
+@media screen and (max-width:569px) {
   .watch__video__container .video__player{
-    width:395px;
+    width: 480px;  
   }
 }
 
-@media screen and (max-width:378px) {
+@media screen and (max-width:495px) {
   .watch__video__container .video__player{
-    width:360px;
+    width:450px;
   }
 }
 
-@media screen and (max-width:360px) {
+@media screen and (max-width:465px) {
   .watch__video__container .video__player{
-    width:345px;
+    width:430px;
   }
 }
 
-@media screen and (max-width:320px) {
+@media screen and (max-width:445px) {
   .watch__video__container .video__player{
-    width:305px;
+    width:400px;
+  }
+}
+ 
+@media screen and (max-width:405px) {
+  .watch__video__container .video__player{
+    width:350px;
   }
 }
 

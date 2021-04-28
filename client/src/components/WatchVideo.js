@@ -36,7 +36,7 @@ const WatchVideo = () => {
            <section className="left__section">
               <div className="video__card">
                  <div className="video__player">
-                 <ReactPlayer width="100%" playing={true} url={video.url} controls={true} onPlay={()=>addToHistory(video)}/>
+                 <ReactPlayer width="100%" height="100%" playing={true} url={video.url} controls={true} onPlay={()=>addToHistory(video)}/>
                  </div>
                  <h4 className="video__title">{video.title}</h4>
                  <div className="video__card__footer">
