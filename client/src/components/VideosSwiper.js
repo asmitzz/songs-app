@@ -5,6 +5,7 @@ import "swiper/bundle";
 import "swiper/swiper-bundle.css";
 import "swiper/swiper-bundle.min.css";
 import { Link,useNavigate } from "react-router-dom";
+import ReactPlayer from "react-player";
 
 const VideosSwiper = ({ type, videos }) => {
   const navigate = useNavigate();
@@ -34,7 +35,7 @@ const VideosSwiper = ({ type, videos }) => {
           <SwiperSlide key={video.id} className="thumbnail">
                <Link to={`/watch/${video.id}`} state={{videos}} className="thumbnail__link">
                   <div>
-                    <img width="280px" height="100%" src={video.thumbnail} alt="thumbnail"/>
+                    <ReactPlayer width="280px" playIcon={<i className="fas fa-play-circle"></i>} height="150px" url={video.url} light={true}/>
                     <h4>{video.title}</h4>
                     <small>Released date : {video.releasedDate}</small>
                   </div>

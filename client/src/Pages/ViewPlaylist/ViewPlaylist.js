@@ -1,4 +1,5 @@
 import React,{useEffect} from 'react';
+import ReactPlayer from 'react-player';
 import { Link,useParams } from 'react-router-dom';
 
 import { useVideos } from '../../contexts/VideosContextProvider';
@@ -25,7 +26,7 @@ const ViewPlaylist = () => {
                 videos.map( video => (
                   <div key={video.id}>
                   <Link to={`/watch/${video.id}`} state={{type:"All videos",videos}} className="thumbnail__link">
-                    <img width="100%" height="180px" src={video.thumbnail} alt="thumbnail"/>
+                    <ReactPlayer width="100%" height="180px" playIcon={<i className="fas fa-play-circle"></i>} url={video.url} light={true}/>
                   </Link>
                      <div className="d-flex justify-content-space-between">
                        <div>

@@ -82,6 +82,11 @@ body{
    color: var(--secondary);
 }
 
+.fa-play-circle{
+   font-size:2rem;
+   color: var(--secondary);
+}
+
 .seeAllVideos__container{
    margin-bottom: 4rem;
 }
@@ -98,7 +103,6 @@ body{
   display:grid;
   grid-gap:15px;
   justify-content: center;
-  padding: 0.5rem;
   color: var(--secondary);
   grid-template-columns:repeat(auto-fill, 300px)
 }
@@ -223,6 +227,7 @@ body{
 .watch__video__container{
    display: grid;
    grid-template-columns: 1.4fr 1fr;
+   width: 100%;
 }
 
 .watch__video__container .video__player{
@@ -230,11 +235,29 @@ body{
   height:330px;
 }
 
+.player-wrapper {
+  position: relative;
+  width: 100%;
+  padding-top: 56.25% /* Player ratio: 100 / (1280 / 720) */
+}
+
+.react-player {
+  width: 100%;
+  position: absolute;
+  top: 0;
+  left: 0;
+}
+
+.watch__video__container .left__section .video__card {
+  width: 88%;
+}
+
 .watch__video__container .left__section{
   display: flex;
   flex-direction:column;
   padding-top: 1rem;
   padding-left: 0.5rem;
+  width: 100%;
   align-items: flex-end;
 }
 
@@ -391,12 +414,18 @@ body{
   .watch__video__container{
     display: flex;
     flex-direction: column;
-    padding-left:1rem;
     margin-bottom: 3rem;
     width: 100%;
   }
+
+.watch__video__container .left__section .video__card {
+   width: 100%;
+}
+
 .watch__video__container .left__section{
   padding-left: 0;
+  padding-top: 0;
+  padding: 0.3rem;
   align-items: flex-start;
   width: 100%;
 }
@@ -407,46 +436,18 @@ body{
 }
 }
 
-@media screen and (max-width:670px) {
-  .watch__video__container{
-      padding:0 0.5rem;
-      margin-bottom: 4rem;
-  }
-  .watch__video__container .video__player{
-     width: 550px;  
-  }
+
+@media (max-width:400px){
+   .nav-link{
+      font-size:0.8rem;
+   }
 }
 
-@media screen and (max-width:569px) {
-  .watch__video__container .video__player{
-    width: 480px;  
+@media (max-width:359px){
+  .nav-link{
+    font-size:0.66rem;
   }
 }
-
-@media screen and (max-width:495px) {
-  .watch__video__container .video__player{
-    width:450px;
-  }
-}
-
-@media screen and (max-width:465px) {
-  .watch__video__container .video__player{
-    width:430px;
-  }
-}
-
-@media screen and (max-width:445px) {
-  .watch__video__container .video__player{
-    width:400px;
-  }
-}
- 
-@media screen and (max-width:405px) {
-  .watch__video__container .video__player{
-    width:350px;
-  }
-}
-
 
 /* watch later */
 

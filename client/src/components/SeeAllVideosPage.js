@@ -1,4 +1,5 @@
 import React,{useEffect} from 'react';
+import ReactPlayer from 'react-player';
 
 import { useLocation, useParams } from "react-router-dom";
 
@@ -25,7 +26,7 @@ const SeeAllVideosPage = () => {
                 videos.map( video => (
                   <Link to={`/watch/${video.id}`} key={video.id} state={{videos}} className="thumbnail__link">
                   <div>
-                    <img width="100%" height="100%" src={video.thumbnail} alt="thumbnail"/>
+                    <ReactPlayer width="100%" height="160px" playIcon={<i className="fas fa-play-circle"></i>} url={video.url} light={true}/>
                     <h4>{video.title}</h4>
                     <small>Released date : {video.releasedDate}</small>
                   </div>
