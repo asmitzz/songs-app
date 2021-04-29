@@ -17,7 +17,7 @@ const History = () => {
 
     return (
         <div className="seeAllVideos__container">
-            <h2 className="seeAllVideos__container__header">History</h2>
+            <h2 className="seeAllVideos__container__header">Recently Played</h2>
             <div className="cards">
             {
                 history.map( video => (

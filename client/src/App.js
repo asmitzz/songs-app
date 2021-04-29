@@ -14,6 +14,7 @@ import PrivateRoute from './utils/PrivateRoute';
 import RouteNotFound from './utils/RouteNotFound';
 import Login from './Auth/Login';
 import SignUp from './Auth/Signup';
+import MyLibrary from './Pages/MyLibrary';
 
 const App = () => {
   return (
@@ -30,6 +31,7 @@ const App = () => {
             <PrivateRoute path="/playlist/:playlistID" element={<ViewPlaylist/>}/>
             <PrivateRoute path="/watchlater" element={<WatchLater/>}/>
             <PrivateRoute path="/history" element={<History/>}/>
+            <PrivateRoute path="/mylibrary" element={<MyLibrary/>}/>
             <Route path="*" element={<RouteNotFound/>}/>
           </Routes>
           <BottomNavbar/>

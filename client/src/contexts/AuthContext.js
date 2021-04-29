@@ -15,7 +15,7 @@ export const AuthContextProvider = ({children}) => {
         }
     }
     
-    const [state,dispatch] = useReducer(userReducer,JSON.parse(localStorage?.getItem('AuthToken')) || { login:false , data:null })
+    const [state,dispatch] = useReducer(userReducer,JSON.parse(localStorage?.getItem('AuthToken')) || { login:true , data:null })
  
     function signout(){
         return new Promise( (resolve) => {

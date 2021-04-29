@@ -8,16 +8,19 @@ const BottomNavbar = () => {
         <nav className="nav nav-bottom">
           <ul className="nav-items">
             <li className="nav-item">
-               <Link to="/" className="nav-link"><i className="fa fa-home"></i><small>Home</small></Link>
+               <Link to="/" className="nav-link"><i className="fas fa-home"></i><small>Home</small></Link>
             </li>
+
             <li className="nav-item">
-               <Link to="/playlist" className="nav-link"><i className="fa fa-music" aria-hidden="true"></i><small>My playlist</small></Link>
+               <Link to="/" className="nav-link"><i className="fas fa-search " aria-hidden="true"></i><small>Search</small></Link>
             </li>
+
             <li className="nav-item">
-               <Link to={{pathname:`/watchlater`}} className="nav-link"><i className="fas fa-clock" aria-hidden="true"></i><small>Watch later</small></Link>
+               <Link to="/history" className="nav-link"><i className="fas fa-history" aria-hidden="true"></i><small>Recents</small></Link>
             </li>
+
             <li className="nav-item">
-               <Link to={{pathname:`/history`}} className="nav-link"><i className="fa fa-history" aria-hidden="true"></i><small>History</small></Link>
+               <Link to="/mylibrary" className="nav-link"><i className="fas fa-user" aria-hidden="true"></i><small>My Library</small></Link>
             </li>
           </ul>
        </nav>
