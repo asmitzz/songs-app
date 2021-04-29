@@ -53,7 +53,7 @@ const SignUp = () => {
             const {data,status} = await axios.post("https://songs-app.herokuapp.com/api/users/signup",state);
 
             if(status === 200){
-              setToast("data.message");
+              setToast(data.message);
 
               setTimeout( () => {
                 setToast("");

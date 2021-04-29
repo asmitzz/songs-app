@@ -55,3 +55,7 @@ export const VideosData = [
         ]
    }
 ]
+
+export const AllVideos = VideosData.reduce( (acc,cat) => {
+   return acc.concat(cat.videos)
+},[]);

@@ -434,10 +434,6 @@ body{
   width: 100%;
 }
 
-
-.watch__video__container .right__section{
-  align-items: flex-start;
-}
 }
 
 
@@ -505,22 +501,40 @@ body{
   width: 100%;
 }
 
-.spinner{
-  height: 40px;
-  width: 40px;
+.spinner__container .circle1,.spinner__container .circle2,.spinner__container .circle3,.spinner__container .circle4,.spinner__container .circle5{
+  height: 10px;
+  margin: 0 0.1rem;
+  width: 10px;
+  border-radius: 50%;
   background:var(--secondary);
-  animation: 1.5s spinner infinite;
 }
 
-@keyframes spinner{
+.spinner__container .circle1{
+  animation: 1s loader infinite;
+}
+.spinner__container .circle2{
+  animation: 1s loader 0.2s infinite;
+}
+.spinner__container .circle3{
+  animation: 1s loader 0.3s infinite;
+}
+.spinner__container .circle4{
+  animation: 1s loader 0.4s infinite;
+}
+.spinner__container .circle5{
+  animation: 1s loader 0.5s infinite;
+}
+
+@keyframes loader{
  from{
-   transform: scale(1) rotate(0);
+   transform: translateY(0);
  }
  50%{
-   transform: scale(2) rotate(180deg);
+   transform: translateY(10px);
+   background: var(--tertiary);
  }
  100%{
-   transform: scale(1) rotate(360deg);
+   transform: translateY(0);
  }
 }
 

@@ -5,10 +5,11 @@ import { useVideos } from "../contexts/VideosContextProvider";
 import {nanoid} from 'nanoid';
 import Backdrop from "../utils/Backdrop/Backdrop";
 import {useAuth} from "../contexts/AuthContext";
+import {AllVideos} from "../VideosData";
 
 const WatchVideo = () => {
     const {videoID} = useParams();
-    const videos = useLocation()?.state?.videos;
+    const videos = useLocation()?.state?.videos || AllVideos;
     const path = useLocation()?.pathname;
     const video = videos?.find(v => v.id === videoID);
 
@@ -41,7 +42,7 @@ const WatchVideo = () => {
            <section className="left__section">
               <div className="video__card">
                  <div className='player-wrapper'>
-                   <ReactPlayer width="100%" className='react-player' height="100%" playing={true} url={video.url} controls={true} onPlay={()=>addToHistory(video)}/>
+                   <ReactPlayer width="100%" className='react-player' height="100%" playing={true} url={video.url} controls={true} onPlay={() => isUserloggedIn ? addToHistory(video) : ""}/>
                  </div>
                  <h4 className="video__title">{video.title}</h4>
                  <div className="video__card__footer">
@@ -51,7 +52,7 @@ const WatchVideo = () => {
                      <div className="video__card__footer__right">
                        <button className="video__card__footer__button"><i className="fa fa-thumbs-up"></i>&nbsp;{video.like}</button>
                        <button className="video__card__footer__button"><i className="fa fa-thumbs-down"></i>&nbsp;{video.dislike}</button>
-                       <button onClick={isUserloggedIn ? () => setShowPlaylist(true) : navigate("/login",{state:{from:path}})} className="video__card__footer__button"><i className="fa fa-music"></i>&nbsp;SAVE</button>
+                       <button onClick={isUserloggedIn ? () => setShowPlaylist(true) : () => navigate("/login",{state:{from:path}})} className="video__card__footer__button"><i className="fa fa-music"></i>&nbsp;SAVE</button>
                      </div>
                  </div>
               </div>
@@ -63,7 +64,7 @@ const WatchVideo = () => {
                     videos.map( video => video.id !== videoID ?(
                         <Link key={video.id} to={{pathname:`/watch/${video.id}`}} state={{type:"Related videos",videos}} className="thumbnail__link">
                            <div className="video__card">
-                             <ReactPlayer url={video.url} height="90px" playIcon={<i className="fas fa-play-circle"></i>} width="100%" light={true} alt="thumbnail"/>
+                             <ReactPlayer url={video.url} width="150px" height="90px" playIcon={<i className="fas fa-play-circle"></i>} light={true} alt="thumbnail"/>
                              <div className="video__card__content">
                               <h5>{video.title}</h5>
                                <br/>

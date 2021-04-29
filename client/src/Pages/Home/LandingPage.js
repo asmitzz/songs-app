@@ -5,7 +5,7 @@ import SwiperCore, { Navigation, Pagination, Scrollbar, A11y } from 'swiper';
 import 'swiper/bundle';
 import 'swiper/swiper-bundle.css';
 import 'swiper/swiper-bundle.min.css';
-import {VideosData} from "../../VideosData";
+import {VideosData,AllVideos} from "../../VideosData";
 import VideosSwiper from '../../components/VideosSwiper';
 
 SwiperCore.use([Navigation, Pagination, Scrollbar, A11y]);
