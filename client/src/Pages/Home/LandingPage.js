@@ -18,15 +18,17 @@ const LandingPage = () => {
     },[])
 
     return (
-        <div className="landing__page__container">
+      <div>
             <Header/>
+            <div className="landing__page__container">
             {
               VideosData.map( cat => (
                 <VideosSwiper key={cat.id} type={cat.type} videos={cat.videos}/>
               ))
             }
-
-        </div>
+          </div>
+      </div>
+        
     )
 }
 
