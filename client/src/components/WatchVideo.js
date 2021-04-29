@@ -1,13 +1,15 @@
 import { useState } from "react";
 import ReactPlayer from "react-player";
-import { Link,useLocation,useParams } from "react-router-dom";
+import { Link,useLocation,useParams,useNavigate } from "react-router-dom";
 import { useVideos } from "../contexts/VideosContextProvider";
 import {nanoid} from 'nanoid';
 import Backdrop from "../utils/Backdrop/Backdrop";
+import {useAuth} from "../contexts/AuthContext";
 
 const WatchVideo = () => {
     const {videoID} = useParams();
     const videos = useLocation()?.state?.videos;
+    const path = useLocation()?.pathname;
     const video = videos?.find(v => v.id === videoID);
 
     const [showPlaylist, setShowPlaylist] = useState(false);
@@ -16,6 +18,9 @@ const WatchVideo = () => {
     const [err,setErr] = useState("");
 
     const {userPlaylists,watchLater,handleWatchLater,addToHistory,addVideoToPlaylist,dispatch} = useVideos();
+    const {isUserloggedIn} = useAuth();
+
+    const navigate = useNavigate();
 
     const createPlaylist = (e) => {
       e.preventDefault();
@@ -46,7 +51,7 @@ const WatchVideo = () => {
                      <div className="video__card__footer__right">
                        <button className="video__card__footer__button"><i className="fa fa-thumbs-up"></i>&nbsp;{video.like}</button>
                        <button className="video__card__footer__button"><i className="fa fa-thumbs-down"></i>&nbsp;{video.dislike}</button>
-                       <button onClick={() => setShowPlaylist(true)} className="video__card__footer__button"><i className="fa fa-music"></i>&nbsp;SAVE</button>
+                       <button onClick={isUserloggedIn ? () => setShowPlaylist(true) : navigate("/login",{state:{from:path}})} className="video__card__footer__button"><i className="fa fa-music"></i>&nbsp;SAVE</button>
                      </div>
                  </div>
               </div>
@@ -58,7 +63,7 @@ const WatchVideo = () => {
                     videos.map( video => video.id !== videoID ?(
                         <Link key={video.id} to={{pathname:`/watch/${video.id}`}} state={{type:"Related videos",videos}} className="thumbnail__link">
                            <div className="video__card">
-                             <img src={video.thumbnail} className="video__thumbnail" alt="thumbnail"/>
+                             <ReactPlayer url={video.url} height="90px" playIcon={<i className="fas fa-play-circle"></i>} width="100%" light={true} alt="thumbnail"/>
                              <div className="video__card__content">
                               <h5>{video.title}</h5>
                                <br/>

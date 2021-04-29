@@ -10,6 +10,11 @@ import WatchLater from './Pages/Watchlater/WatchLater';
 import History from './Pages/History/History';
 import ViewPlaylist from './Pages/ViewPlaylist/ViewPlaylist';
 
+import PrivateRoute from './utils/PrivateRoute';
+import RouteNotFound from './utils/RouteNotFound';
+import Login from './Auth/Login';
+import SignUp from './Auth/Signup';
+
 const App = () => {
   return (
     <div>
@@ -17,11 +22,15 @@ const App = () => {
             <Route path="/" element={<LandingPage/>}/>
             <Route path="/watch/:videoID" element={<WatchVideo/>}/>
             <Route path="/videos/:type" element={<SeeAllVideosPage/>}/>
-            <Route path="/playlist/videos/:type" element={<SeeAllVideosPage/>}/>
-            <Route path="/playlist" element={<PlayListPage/>}/>
-            <Route path="/playlist/:playlistID" element={<ViewPlaylist/>}/>
-            <Route path="/watchlater" element={<WatchLater/>}/>
-            <Route path="/history" element={<History/>}/>
+            <Route path="/login" element={<Login/>}/>
+            <Route path="/signup" element={<SignUp/>}/>
+
+            <PrivateRoute path="/playlist/videos/:type" element={<SeeAllVideosPage/>}/>
+            <PrivateRoute path="/playlist" element={<PlayListPage/>}/>
+            <PrivateRoute path="/playlist/:playlistID" element={<ViewPlaylist/>}/>
+            <PrivateRoute path="/watchlater" element={<WatchLater/>}/>
+            <PrivateRoute path="/history" element={<History/>}/>
+            <Route path="*" element={<RouteNotFound/>}/>
           </Routes>
           <BottomNavbar/>
     </div>
