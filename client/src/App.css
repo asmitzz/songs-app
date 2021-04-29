@@ -19,12 +19,11 @@ body{
 }
 
 .header{
-  position: sticky;
-  top: 0;
-  z-index: 2;
+  width: 100%;
   background:var(--primary);
+  color:var(--secondary);
   display: flex;
-  justify-content:center;
+  justify-content:space-around;
   align-items: center;
   box-shadow: 1px 2px 10px rgba(0, 0, 0, 0.2);
   padding:0.8rem 0;
@@ -38,6 +37,8 @@ body{
   position: absolute;
   top: -5px;
   right: 130px;
+  height:42px;
+  width: 100px;
 }
 
 .header .header__link{
@@ -152,10 +153,14 @@ body{
   grid-template-columns:repeat(auto-fill, 300px)
 }
 
+.seeAllVideos__container .cards .card{
+  height:180px
+}
+
 
 @media (max-width: 640px){
   .seeAllVideos__container .cards{
-    grid-template-columns:0.9fr;
+    grid-template-columns:0.98fr;
   }
   
   .seeAllVideos__container{
@@ -165,7 +170,15 @@ body{
  .nav-link .fas{
   font-size: 1.1rem;
 }
- 
+
+.header .logo__name{
+  font-size: 1.6rem;
+  margin-left: 1.4rem;
+}
+.logo-img{
+  right: 100px;
+  height: 38px;
+}
 }
 
 .card__footer{

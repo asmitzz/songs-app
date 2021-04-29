@@ -26,7 +26,7 @@ const SeeAllVideosPage = () => {
                 videos.map( video => (
                   <Link to={`/watch/${video.id}`} key={video.id} state={{videos}} className="thumbnail__link">
                   <div>
-                    <ReactPlayer width="100%" height="160px" playIcon={<i className="fas fa-play-circle"></i>} url={video.url} light={true}/>
+                    <ReactPlayer width="100%" height="180px" playIcon={<i className="fas fa-play-circle"></i>} url={video.url} light={true}/>
                     <h4>{video.title}</h4>
                     <small>Released date : {video.releasedDate}</small>
                   </div>

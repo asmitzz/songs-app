@@ -23,7 +23,7 @@ const History = () => {
                 history.map( video => (
                   <div key={video.id}>
                   <Link to={`/watch/${video.id}`} state={{type:"All videos",videos:history}} className="thumbnail__link">
-                    <ReactPlayer width="100%" height="150px" playIcon={<i className="fas fa-play-circle"></i>} url={video.url} light={true}/>
+                    <ReactPlayer width="100%" height="180px" playIcon={<i className="fas fa-play-circle"></i>} url={video.url} light={true}/>
                   </Link>
                      <div className="d-flex justify-content-space-between">
                        <div>

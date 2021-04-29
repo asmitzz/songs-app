@@ -6,10 +6,11 @@ const Header = () => {
         <div className="header">
             <NavLink className="header__link logo__name" to="/">
                 <div className="logo">
-                  <img src={Logo} width="100px" className="logo-img" height="42px" alt="logo" />
+                  <img src={Logo} className="logo-img" alt="logo" />
                 </div>
                 HotMusic
             </NavLink>
+            <small>v1.0</small>
         </div>
     )
 }
