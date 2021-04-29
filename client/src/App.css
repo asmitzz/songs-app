@@ -19,11 +19,22 @@ body{
 }
 
 .header{
+  position: relative;
   display: flex;
   justify-content:center;
   align-items: center;
   box-shadow: 1px 2px 10px rgba(0, 0, 0, 0.2);
-  padding:0.5rem 0;
+  padding:0.8rem 0;
+}
+
+.logo{
+  position: relative;
+}
+
+.logo-img{
+  position: absolute;
+  top: -5px;
+  right: 130px;
 }
 
 .header .header__link{
