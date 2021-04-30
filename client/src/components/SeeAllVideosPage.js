@@ -1,7 +1,8 @@
 import React,{useEffect} from 'react';
 import ReactPlayer from 'react-player';
 
-import { useLocation, useParams } from "react-router-dom";
+import { useParams } from "react-router-dom";
+import { useVideos } from "../contexts/VideosContextProvider";
 
 import { Link } from 'react-router-dom';
 
@@ -13,18 +14,19 @@ const SeeAllVideosPage = () => {
           top:0
         })
     },[])
-
+   
+    const {videosByCategory} = useVideos();
     const {type} = useParams();
-    const location = useLocation();
-    const videos = location?.state?.videos;
-
+    const category = videosByCategory.find(v => v.type.toLowerCase() === type.toLowerCase());
+    const videos = category?.videos || [];
+    
     return (
         <div className="seeAllVideos__container">
             <h2 className="seeAllVideos__container__header">{type}</h2>
             <div className="cards">
             {
                 videos.map( video => (
-                  <Link to={`/watch/${video.id}`} key={video.id} state={{videos}} className="thumbnail__link">
+                  <Link to={`/watch/${video._id}`} key={video._id} state={{videos}} className="thumbnail__link">
                   <div>
                     <ReactPlayer width="100%" height="180px" playIcon={<i className="fas fa-play-circle"></i>} url={video.url} light={true}/>
                     <h4>{video.title}</h4>

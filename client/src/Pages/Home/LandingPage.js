@@ -5,13 +5,15 @@ import SwiperCore, { Navigation, Pagination, Scrollbar, A11y } from 'swiper';
 import 'swiper/bundle';
 import 'swiper/swiper-bundle.css';
 import 'swiper/swiper-bundle.min.css';
-import {VideosData} from "../../VideosData";
 import VideosSwiper from '../../components/VideosSwiper';
 import Header from '../../components/Header';
+import { useVideos } from '../../contexts/VideosContextProvider';
 
 SwiperCore.use([Navigation, Pagination, Scrollbar, A11y]);
 
 const LandingPage = () => {
+
+    const {videosByCategory} = useVideos(); 
 
     useEffect( () => {
         window.scroll({top:0, behavior:'smooth'})
@@ -22,8 +24,8 @@ const LandingPage = () => {
             <Header/>
             <div className="landing__page__container">
             {
-              VideosData.map( cat => (
-                <VideosSwiper key={cat.id} type={cat.type} videos={cat.videos}/>
+              videosByCategory.map( cat => (
+                <VideosSwiper key={cat._id} type={cat.type} videos={cat.videos}/>
               ))
             }
           </div>

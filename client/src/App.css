@@ -39,6 +39,13 @@ body{
   font-size:2rem;
 }
 
+.header .signout__btn{
+  background:var(--primary);
+  border: none;
+  color:var(--secondary);
+  cursor: pointer;
+}
+
 .nav{
   background:var(--primary);
   width: 100%;
@@ -84,6 +91,16 @@ body{
   padding:0 0.5rem;
   margin-bottom: 4rem;
   background: linear-gradient(190deg, var(--primary) 18%, var(--tertiary) 70%, var(--primary) 80%);
+  animation: move-right 0.6s 1 ease-in;
+}
+
+@keyframes move-right{
+   from {
+     transform: translateX(-100%);
+   }
+   to{
+     transform: translateX(0);
+   }
 }
 
 .landing__page__headings{
@@ -123,6 +140,7 @@ body{
 
 .seeAllVideos__container{
    margin-bottom: 4rem;
+   animation: move-right 0.6s 1 ease-in;
 }
 
 .seeAllVideos__container__header{
@@ -279,6 +297,7 @@ body{
    display: grid;
    grid-template-columns: 1.4fr 1fr;
    width: 100%;
+   animation: move-right 0.6s 1 ease-in;
 }
 
 .watch__video__container .video__player{

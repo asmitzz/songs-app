@@ -8,13 +8,13 @@ import { AuthContextProvider } from './contexts/AuthContext';
 
 ReactDOM.render(
   <React.StrictMode>
-      <VideosContextProvider>
       <AuthContextProvider>
+       <VideosContextProvider>
         <BrowserRouter>
           <App />
         </BrowserRouter>
+       </VideosContextProvider>
       </AuthContextProvider>
-      </VideosContextProvider>
   </React.StrictMode>,
   document.getElementById('root')
 );

@@ -54,7 +54,7 @@ const Login = () => {
        if(formValidate(state)){
           setSpinner(true)
           try {
-            const {status,data } = await axios.post("https://songs-app.herokuapp.com/api/users/login",state);
+            const {status,data } = await axios.post("https://hotmusic20-21.herokuapp.com/api/users/login",state);
             
              if( status === 200 ){
                localStorage.setItem('authToken',JSON.stringify({login:true,data}));

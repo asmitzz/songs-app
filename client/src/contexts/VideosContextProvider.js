@@ -1,11 +1,52 @@
-import React, { createContext, useContext, useReducer } from 'react';
-
+import React, { createContext, useContext, useEffect, useReducer } from 'react';
+import axios from 'axios';
+import {useAuth} from "./AuthContext";
 export const VideosContext = createContext();
 
 export const VideosContextProvider = ({children}) => {
+    const {uid} = useAuth();
+    
+    useEffect(() => {
+        (async function(){
+          try {
+          const {data} = await axios.get(`https://hotmusic20-21.herokuapp.com/api/users/${uid}`);
+          const user = data?.user;
+          dispatch({type:"INITIAL_STATE",payload:{playlist:user.playlists,watchLater:user.watchLater,history:user.history}})
+          } catch (error) {
+             console.log(error);
+          }
+        })()
+    },[uid])
+
+    useEffect(() => {
+        (async function(){
+          try {
+          const {data}= await axios.get(`https://hotmusic20-21.herokuapp.com/api/allvideos`);
+          const allVideos = data?.allVideos;  
+          dispatch({type:"INITIAL_STATE",payload:{allVideos}})
+          } catch (error) {
+              console.log(error);
+          }
+        })()
+    },[uid])
+
+    useEffect(() => {
+        (async function(){
+          try {
+          const {data} = await axios.get(`https://hotmusic20-21.herokuapp.com/api/videosbycategory`);
+          const videosByCategory = data?.videosByCategory;
+          dispatch({type:"INITIAL_STATE",payload:{videosByCategory}})
+          } catch (error) {
+            console.log(error);
+          }
+        })()
+    },[uid])
+
 
     const VideosReducer = (state,action) => {
         switch (action.type) {
+            case "INITIAL_STATE":
+            return {...state,...action.payload}
             case "ADD_TO_WATCH_LATER":
             return {...state,watchLater:[action.payload,...state.watchLater]}    
             case "REMOVE_FROM_WATCH_LATER":
@@ -27,7 +68,7 @@ export const VideosContextProvider = ({children}) => {
         }
     }
 
-    const [{playlist,watchLater,history}, dispatch] = useReducer(VideosReducer, {playlist:[],watchLater:[],history:[],selectedPlaylist:null });
+    const [{allVideos,videosByCategory,playlist,watchLater,history}, dispatch] = useReducer(VideosReducer, {allVideos:[],videosByCategory:[],playlist:[],watchLater:[],history:[]});
 
     const handleWatchLater = (video) => {
         if( watchLater.find( v => v.id === video.id) ){
@@ -59,7 +100,7 @@ export const VideosContextProvider = ({children}) => {
     }
 
     return (
-        <VideosContext.Provider value={{watchLater,history,userPlaylists:playlist,handleWatchLater,addToHistory,removeFromHistory,addVideoToPlaylist,removeVideoFromPlaylist,dispatch}}>
+        <VideosContext.Provider value={{allVideos,videosByCategory,watchLater,history,userPlaylists:playlist,handleWatchLater,addToHistory,removeFromHistory,addVideoToPlaylist,removeVideoFromPlaylist,dispatch}}>
            {children}
         </VideosContext.Provider>
     );

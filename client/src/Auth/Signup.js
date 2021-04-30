@@ -50,7 +50,7 @@ const SignUp = () => {
        if(formValidate(state)){
          setSpinner(true)
           try {
-            const {data,status} = await axios.post("https://songs-app.herokuapp.com/api/users/signup",state);
+            const {data,status} = await axios.post("https://hotmusic20-21.herokuapp.com/api/users/signup",state);
 
             if(status === 200){
               setToast(data.message);

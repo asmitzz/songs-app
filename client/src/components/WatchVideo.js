@@ -5,20 +5,20 @@ import { useVideos } from "../contexts/VideosContextProvider";
 import {nanoid} from 'nanoid';
 import Backdrop from "../utils/Backdrop/Backdrop";
 import {useAuth} from "../contexts/AuthContext";
-import {AllVideos} from "../VideosData";
 
 const WatchVideo = () => {
+    const {userPlaylists,allVideos,watchLater,handleWatchLater,addToHistory,addVideoToPlaylist,dispatch} = useVideos();
+
     const {videoID} = useParams();
-    const videos = useLocation()?.state?.videos || AllVideos;
+    const videos = useLocation()?.state?.videos || allVideos;
     const path = useLocation()?.pathname;
-    const video = videos?.find(v => v.id === videoID);
+    const video = videos?.find(v => v._id === videoID);
 
     const [showPlaylist, setShowPlaylist] = useState(false);
     const [playlistName, setPlaylistName] = useState("");
     const [createPlaylistBtn, setCreatePlaylistBtn] = useState(false);
     const [err,setErr] = useState("");
 
-    const {userPlaylists,watchLater,handleWatchLater,addToHistory,addVideoToPlaylist,dispatch} = useVideos();
     const {isUserloggedIn} = useAuth();
 
     const navigate = useNavigate();
@@ -61,8 +61,8 @@ const WatchVideo = () => {
             <section className="right__section">
                <h3 className="right__section__heading">All Videos</h3>
                 { 
-                    videos.map( video => video.id !== videoID ?(
-                        <Link key={video.id} to={{pathname:`/watch/${video.id}`}} state={{type:"Related videos",videos}} className="thumbnail__link">
+                    videos.map( video => video._id !== videoID ?(
+                        <Link key={video._id} to={{pathname:`/watch/${video._id}`}} state={{type:"Related videos",videos}} className="thumbnail__link">
                            <div className="video__card">
                              <ReactPlayer url={video.url} width="150px" height="90px" playIcon={<i className="fas fa-play-circle"></i>} light={true} alt="thumbnail"/>
                              <div className="video__card__content">
@@ -85,13 +85,13 @@ const WatchVideo = () => {
                     </div>
                     <div className="modal__content">
                        <div className="modal__content__item">
-                          <input type="checkbox" defaultChecked={watchLater.find(v => v.id === videoID)} onChange={() => handleWatchLater(video)} style={{cursor:"pointer"}}/>
+                          <input type="checkbox" defaultChecked={watchLater.find(v => v._id === videoID)} onChange={() => handleWatchLater(video)} style={{cursor:"pointer"}}/>
                           <label><small>Watch later</small></label>
                        </div>
 
                        {userPlaylists.map( (list,index) => (
-                         <div className="modal__content__item" key={list.id}>
-                           <input type="checkbox" defaultChecked={list.videos.find(v => v.id === videoID)} onChange={() => addVideoToPlaylist(video,list.id,index)} style={{cursor:"pointer"}}/>
+                         <div className="modal__content__item" key={list._id}>
+                           <input type="checkbox" defaultChecked={list.videos.find(v => v._id === videoID)} onChange={() => addVideoToPlaylist(video,list._id,index)} style={{cursor:"pointer"}}/>
                            <label><small>{list.name}</small></label>
                          </div>
                        ) )}

@@ -32,8 +32,8 @@ const VideosSwiper = ({ type, videos }) => {
         navigation
       >
         { videos.map((video) => (
-          <SwiperSlide key={video.id} className="thumbnail">
-               <Link to={`/watch/${video.id}`} state={{videos}} className="thumbnail__link">
+          <SwiperSlide key={video._id} className="thumbnail">
+               <Link to={`/watch/${video._id}`} state={{videos}} className="thumbnail__link">
                   <div>
                     <ReactPlayer width="280px" playIcon={<i className="fas fa-play-circle"></i>} height="150px" url={video.url} light={true}/>
                     <h4>{video.title}</h4>

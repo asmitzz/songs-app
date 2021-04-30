@@ -14,7 +14,7 @@ import PrivateRoute from './utils/PrivateRoute';
 import RouteNotFound from './utils/RouteNotFound';
 import Login from './Auth/Login';
 import SignUp from './Auth/Signup';
-import MyLibrary from './Pages/MyLibrary';
+import MyLibrary from './Pages/MyLibrary/MyLibrary';
 
 const App = () => {
   return (
@@ -27,7 +27,6 @@ const App = () => {
             <Route path="/login" element={<Login/>}/>
             <Route path="/signup" element={<SignUp/>}/>
 
-            <PrivateRoute path="/playlist/videos/:type" element={<SeeAllVideosPage/>}/>
             <PrivateRoute path="/playlist" element={<PlayListPage/>}/>
             <PrivateRoute path="/playlist/:playlistID" element={<ViewPlaylist/>}/>
             <PrivateRoute path="/watchlater" element={<WatchLater/>}/>

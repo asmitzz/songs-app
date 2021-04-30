@@ -15,12 +15,12 @@ export const AuthContextProvider = ({children}) => {
         }
     }
     
-    const [state,dispatch] = useReducer(userReducer,JSON.parse(localStorage?.getItem('AuthToken')) || { login:true , data:null })
- 
+    const [state,dispatch] = useReducer(userReducer,JSON.parse(localStorage?.getItem('authToken')) || { login:false , data:null })
+
     function signout(){
         return new Promise( (resolve) => {
             setTimeout( () => {
-                localStorage?.removeItem('AuthToken');
+                localStorage?.removeItem('authToken');
                 dispatch({type:"SIGNOUT"});
                 resolve({ success: true,status:200})
             },2000);
