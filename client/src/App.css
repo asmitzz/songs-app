@@ -29,22 +29,10 @@ body{
   padding:0.8rem 0;
 }
 
-.logo{
-  position: relative;
-}
-
-.logo-img{
-  position: absolute;
-  top: -5px;
-  right: 130px;
-  height:42px;
-  width: 100px;
-}
-
 .header .header__link{
    background:none;
    text-decoration: none;
-   color: var(--secondary);
+   color:var(--secondary);
 }
 
 .header .logo__name{
