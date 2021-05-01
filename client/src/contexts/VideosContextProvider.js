@@ -9,7 +9,7 @@ export const VideosContextProvider = ({children}) => {
     useEffect(() => {
         (async function(){
           try {
-          const {data} = await axios.get(`http://localhost:5000/api/users/${uid}`);
+          const {data} = await axios.get(`https://hotmusic20-21.herokuapp.com/api/users/${uid}`);
           const user = data?.user;
 
           dispatch({type:"INITIAL_STATE",payload:{userDetails:user,playlists:user.playlists,watchLater:user.watchLater,history:user.history}})
@@ -22,7 +22,7 @@ export const VideosContextProvider = ({children}) => {
     useEffect(() => {
         (async function(){
           try {
-          const {data}= await axios.get(`http://localhost:5000/api/allvideos`);
+          const {data}= await axios.get(`https://hotmusic20-21.herokuapp.com/api/allvideos`);
           const allVideos = data?.allVideos;  
           dispatch({type:"INITIAL_STATE",payload:{allVideos}})
           } catch (error) {
@@ -34,7 +34,7 @@ export const VideosContextProvider = ({children}) => {
     useEffect(() => {
         (async function(){
           try {
-          const {data} = await axios.get(`http://localhost:5000/api/videosbycategory`);
+          const {data} = await axios.get(`https://hotmusic20-21.herokuapp.com/api/videosbycategory`);
           const videosByCategory = data?.videosByCategory;
           dispatch({type:"INITIAL_STATE",payload:{videosByCategory}})
           } catch (error) {
@@ -72,7 +72,7 @@ export const VideosContextProvider = ({children}) => {
 
     const handleWatchLater = async(video) => {
         try {
-            await axios.post(`http://localhost:5000/api/users/watchlater/${uid}`,{videoID:video._id});
+            await axios.post(`https://hotmusic20-21.herokuapp.com/api/users/watchlater/${uid}`,{videoID:video._id});
 
             if( watchLater.find( v => v._id === video._id) ){
                 return dispatch({type:"REMOVE_FROM_WATCH_LATER",payload:video._id});
@@ -96,7 +96,7 @@ export const VideosContextProvider = ({children}) => {
 
     const addToHistory = async(video) => {
         try {
-            await axios.post(`http://localhost:5000/api/users/history/${uid}`,{videoID:video._id})
+            await axios.post(`https://hotmusic20-21.herokuapp.com/api/users/history/${uid}`,{videoID:video._id})
             if( history.find( v => v._id === video._id) ){
                 dispatch({type:"REMOVE_FROM_HISTORY",payload:video._id});
              }
@@ -109,7 +109,7 @@ export const VideosContextProvider = ({children}) => {
 
     const removeFromHistory = async(videoID) => {
         try {
-           await axios.delete(`http://localhost:5000/api/users/history/${uid}/${videoID}`)
+           await axios.delete(`https://hotmusic20-21.herokuapp.com/api/users/history/${uid}/${videoID}`)
            dispatch({type:"REMOVE_FROM_HISTORY",payload:videoID});
         } catch (error) {
             console.log(error);
