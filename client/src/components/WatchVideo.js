@@ -7,7 +7,7 @@ import Backdrop from "../utils/Backdrop/Backdrop";
 import {useAuth} from "../contexts/AuthContext";
 
 const WatchVideo = () => {
-    const {userPlaylists,allVideos,watchLater,handleWatchLater,addToHistory,addVideoToPlaylist,dispatch} = useVideos();
+    const {playlists,allVideos,watchLater,handleWatchLater,addToHistory,addVideoToPlaylist,dispatch} = useVideos();
 
     const {videoID} = useParams();
     const videos = useLocation()?.state?.videos || allVideos;
@@ -89,7 +89,7 @@ const WatchVideo = () => {
                           <label><small>Watch later</small></label>
                        </div>
 
-                       {userPlaylists.map( (list,index) => (
+                       {playlists.map( (list,index) => (
                          <div className="modal__content__item" key={list._id}>
                            <input type="checkbox" defaultChecked={list.videos.find(v => v._id === videoID)} onChange={() => addVideoToPlaylist(video,list._id,index)} style={{cursor:"pointer"}}/>
                            <label><small>{list.name}</small></label>
