@@ -1,20 +1,11 @@
-import { useEffect, useState } from "react";
+import React from "react";
 
 import { useNavigate } from "react-router-dom";
-import axios from "axios";
-import {useAuth} from "../../contexts/AuthContext";
+import {useVideos} from "../../contexts/VideosContextProvider";
 
 const MyLibrary = () => {
     const navigate = useNavigate();
-    const {uid} = useAuth();
-    const [userDetails,setUserDetails] = useState(null)
-
-    useEffect(() => {
-      (async function(){
-        const {data} = await axios.get(`https://hotmusic20-21.herokuapp.com/api/users/${uid}`);
-        setUserDetails(data.user);
-      })()
-    },[uid])
+    const {userDetails,watchLater,history,playlists} = useVideos();
 
     return (
         <div className="mylibrary__container">
@@ -26,15 +17,15 @@ const MyLibrary = () => {
               </div>
               <div className="playlist__and__watchlater">
                   <div className="section">
-                      <small>{userDetails?.playlists.length}</small>
+                      <small>{playlists?.length}</small>
                       <button className="playlist__btn" onClick={() => navigate("/playlist")}>PLAYLISTS</button>
                   </div>
                   <div className="section">
-                      <small>{userDetails?.watchLater.length}</small>
+                      <small>{watchLater?.length}</small>
                       <button className="watch__later__btn" onClick={() => navigate("/watchlater")}>WATCH LATER</button>
                   </div>
                   <div className="section">
-                      <small>{userDetails?.history.length}</small>
+                      <small>{history?.length}</small>
                       <button className="watch__later__btn" onClick={() => navigate("/history")}>RECENTS</button>
                   </div>
               </div>

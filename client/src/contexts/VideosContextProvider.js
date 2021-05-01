@@ -9,9 +9,10 @@ export const VideosContextProvider = ({children}) => {
     useEffect(() => {
         (async function(){
           try {
-          const {data} = await axios.get(`https://hotmusic20-21.herokuapp.com/api/users/${uid}`);
+          const {data} = await axios.get(`http://localhost:5000/api/users/${uid}`);
           const user = data?.user;
-          dispatch({type:"INITIAL_STATE",payload:{playlist:user.playlists,watchLater:user.watchLater,history:user.history}})
+
+          dispatch({type:"INITIAL_STATE",payload:{userDetails:user,playlists:user.playlists,watchLater:user.watchLater,history:user.history}})
           } catch (error) {
              console.log(error);
           }
@@ -21,7 +22,7 @@ export const VideosContextProvider = ({children}) => {
     useEffect(() => {
         (async function(){
           try {
-          const {data}= await axios.get(`https://hotmusic20-21.herokuapp.com/api/allvideos`);
+          const {data}= await axios.get(`http://localhost:5000/api/allvideos`);
           const allVideos = data?.allVideos;  
           dispatch({type:"INITIAL_STATE",payload:{allVideos}})
           } catch (error) {
@@ -33,7 +34,7 @@ export const VideosContextProvider = ({children}) => {
     useEffect(() => {
         (async function(){
           try {
-          const {data} = await axios.get(`https://hotmusic20-21.herokuapp.com/api/videosbycategory`);
+          const {data} = await axios.get(`http://localhost:5000/api/videosbycategory`);
           const videosByCategory = data?.videosByCategory;
           dispatch({type:"INITIAL_STATE",payload:{videosByCategory}})
           } catch (error) {
@@ -42,7 +43,6 @@ export const VideosContextProvider = ({children}) => {
         })()
     },[uid])
 
-
     const VideosReducer = (state,action) => {
         switch (action.type) {
             case "INITIAL_STATE":
@@ -50,36 +50,42 @@ export const VideosContextProvider = ({children}) => {
             case "ADD_TO_WATCH_LATER":
             return {...state,watchLater:[action.payload,...state.watchLater]}    
             case "REMOVE_FROM_WATCH_LATER":
-            return {...state,watchLater:state.watchLater.filter( v => v.id !== action.payload )}
+            return {...state,watchLater:state.watchLater.filter( v => v._id !== action.payload )}
             case "CREATE_PLAYLIST":
-            return {...state,playlist:[...state.playlist,action.payload]};
+            return {...state,playlists:[...state.playlists,action.payload]};
             case "REMOVE_PLAYLIST":
-            return {...state,playlist:state.playlist.filter( list => list.id !== action.payload )};
+            return {...state,playlists:state.playlists.filter( list => list._id !== action.payload )};
             case "ADD_TO_PLAYLIST":
-            return {...state,playlist:state.playlist.map( list => list.id === action.payload.playlistID ? {...list,videos:[...list.videos,action.payload.video]} : list )}
+            return {...state,playlists:state.playlists.map( list => list._id === action.payload.playlistID ? {...list,videos:[...list.videos,action.payload.video]} : list )}
             case "REMOVE_FROM_PLAYLIST":
-            return {...state,playlist:state.playlist.map( list => list.id === action.payload.playlistID ? {...list,videos:list.videos.filter( v => v.id !== action.payload.videoID)} : list )}
+            return {...state,playlists:state.playlists.map( list => list._id === action.payload.playlistID ? {...list,videos:list.videos.filter( v => v._id !== action.payload.videoID)} : list )}
             case "ADD_TO_HISTORY":
             return {...state, history:[action.payload,...state.history]}
             case "REMOVE_FROM_HISTORY":
-            return {...state, history:state.history.filter( v => v.id !== action.payload)}
+            return {...state, history:state.history.filter( v => v._id !== action.payload)}
             default:
             return state;
         }
     }
 
-    const [{allVideos,videosByCategory,playlist,watchLater,history}, dispatch] = useReducer(VideosReducer, {allVideos:[],videosByCategory:[],playlist:[],watchLater:[],history:[]});
+    const [{allVideos,videosByCategory,playlists,watchLater,history,userDetails}, dispatch] = useReducer(VideosReducer, {allVideos:[],videosByCategory:[],playlists:[],watchLater:[],history:[],userDetails:{}});
 
-    const handleWatchLater = (video) => {
-        if( watchLater.find( v => v.id === video.id) ){
-          return dispatch({type:"REMOVE_FROM_WATCH_LATER",payload:video.id});
-        };
-        dispatch({type:"ADD_TO_WATCH_LATER",payload:video});
+    const handleWatchLater = async(video) => {
+        try {
+            await axios.post(`http://localhost:5000/api/users/watchlater/${uid}`,{videoID:video._id});
+
+            if( watchLater.find( v => v._id === video._id) ){
+                return dispatch({type:"REMOVE_FROM_WATCH_LATER",payload:video._id});
+            };
+            dispatch({type:"ADD_TO_WATCH_LATER",payload:video});
+        } catch (error) {
+            console.log(error);
+        }
     }
 
     const addVideoToPlaylist = (video,playlistID,playlistIndex) => {
-        if( playlist[playlistIndex].videos.find( v => v.id === video.id) ){
-          return dispatch({type:"REMOVE_FROM_PLAYLIST",payload:{videoID:video.id,playlistID}});
+        if( playlists[playlistIndex].videos.find( v => v._id === video._id) ){
+          return dispatch({type:"REMOVE_FROM_PLAYLIST",payload:{videoID:video._id,playlistID}});
         };
         dispatch({type:"ADD_TO_PLAYLIST",payload:{video,playlistID}});
     }
@@ -88,19 +94,30 @@ export const VideosContextProvider = ({children}) => {
         dispatch({type:"REMOVE_FROM_PLAYLIST",payload:{videoID,playlistID}});
     }
 
-    const addToHistory = (video) => {
-        if( history.find( v => v.id === video.id) ){
-           dispatch({type:"REMOVE_FROM_HISTORY",payload:video.id});
+    const addToHistory = async(video) => {
+        try {
+            await axios.post(`http://localhost:5000/api/users/history/${uid}`,{videoID:video._id})
+            if( history.find( v => v._id === video._id) ){
+                dispatch({type:"REMOVE_FROM_HISTORY",payload:video._id});
+             }
+             dispatch({type:"ADD_TO_HISTORY",payload:video});
+        } catch (error) {
+            console.log(error);
         }
-        dispatch({type:"ADD_TO_HISTORY",payload:video});
+        
     }
 
-    const removeFromHistory = (videoID) => {
-        dispatch({type:"REMOVE_FROM_HISTORY",payload:videoID});
+    const removeFromHistory = async(videoID) => {
+        try {
+           await axios.delete(`http://localhost:5000/api/users/history/${uid}/${videoID}`)
+           dispatch({type:"REMOVE_FROM_HISTORY",payload:videoID});
+        } catch (error) {
+            console.log(error);
+        }
     }
 
     return (
-        <VideosContext.Provider value={{allVideos,videosByCategory,watchLater,history,userPlaylists:playlist,handleWatchLater,addToHistory,removeFromHistory,addVideoToPlaylist,removeVideoFromPlaylist,dispatch}}>
+        <VideosContext.Provider value={{userDetails,allVideos,videosByCategory,watchLater,history,playlists,handleWatchLater,addToHistory,removeFromHistory,addVideoToPlaylist,removeVideoFromPlaylist,dispatch}}>
            {children}
         </VideosContext.Provider>
     );

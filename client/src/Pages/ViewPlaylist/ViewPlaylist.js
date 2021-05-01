@@ -13,10 +13,10 @@ const ViewPlaylist = () => {
         })
     },[])
 
-    const {userPlaylists,removeVideoFromPlaylist} = useVideos();
+    const {playlists,removeVideoFromPlaylist} = useVideos();
     const {playlistID} = useParams();
 
-    const {videos,name} = userPlaylists.find( list => list.id === playlistID);
+    const {videos,name} = playlists.find( list => list.id === playlistID);
  
     return (
         <div className="seeAllVideos__container">
