@@ -1,7 +1,7 @@
 import { Route,Routes } from 'react-router-dom';
 import './App.css';
 import BottomNavbar from './components/BottomNavbar';
-import WatchVideo from './components/WatchVideo';
+import VideoPlayer from './components/VideoPlayer';
 import SeeAllVideosPage from './components/SeeAllVideosPage';
 
 import PlayListPage from './Pages/Playlist/PlayListPage';
@@ -22,7 +22,7 @@ const App = () => {
          
           <Routes>
             <Route path="/" element={<LandingPage/>}/>
-            <Route path="/watch/:videoID" element={<WatchVideo/>}/>
+            <Route path="/watch/:videoID" element={<VideoPlayer/>}/>
             <Route path="/videos/:type" element={<SeeAllVideosPage/>}/>
             <Route path="/login" element={<Login/>}/>
             <Route path="/signup" element={<SignUp/>}/>

@@ -5,7 +5,7 @@ import { useVideos } from "../contexts/VideosContextProvider";
 import Backdrop from "../utils/Backdrop/Backdrop";
 import {useAuth} from "../contexts/AuthContext";
 
-const WatchVideo = () => {
+const VideoPlayer = () => {
     const {playlists,allVideos,watchLater,handleWatchLater,addToHistory,addVideoToPlaylist,createPlaylist} = useVideos();
 
     const {videoID} = useParams();
@@ -122,4 +122,4 @@ const WatchVideo = () => {
     ) : ("no videos");
 };
 
-export default WatchVideo;
+export default VideoPlayer;
