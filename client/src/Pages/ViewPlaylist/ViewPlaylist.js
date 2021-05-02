@@ -16,7 +16,7 @@ const ViewPlaylist = () => {
     const {playlists,removeVideoFromPlaylist} = useVideos();
     const {playlistID} = useParams();
 
-    const {videos,name} = playlists.find( list => list.id === playlistID);
+    const {videos,name} = playlists.find( list => list._id === playlistID);
  
     return (
         <div className="seeAllVideos__container">
@@ -24,8 +24,8 @@ const ViewPlaylist = () => {
             <div className="cards">
             {
                 videos.map( video => (
-                  <div key={video.id}>
-                  <Link to={`/watch/${video.id}`} state={{type:"All videos",videos}} className="thumbnail__link">
+                  <div key={video._id}>
+                  <Link to={`/watch/${video._id}`} state={{type:"All videos",videos}} className="thumbnail__link">
                     <ReactPlayer width="100%" height="180px" playIcon={<i className="fas fa-play-circle"></i>} url={video.url} light={true}/>
                   </Link>
                      <div className="d-flex justify-content-space-between">
@@ -33,7 +33,7 @@ const ViewPlaylist = () => {
                           <h4>{video.title}</h4>
                           <small>Released date : {video.releasedDate}</small>
                        </div>
-                       <button className="delete__btn" onClick={() => removeVideoFromPlaylist(video.id,playlistID)} title="Remove"><i className="fa fa-trash"></i></button>
+                       <button className="delete__btn" onClick={() => removeVideoFromPlaylist(video._id,playlistID)} title="Remove"><i className="fa fa-trash"></i></button>
                      </div>
                   </div>
                 ))

@@ -1,6 +1,5 @@
 import React, { useState } from "react";
 import { useVideos } from "../../contexts/VideosContextProvider";
-import {nanoid} from 'nanoid';
 
 import {Link} from 'react-router-dom';
 
@@ -10,13 +9,13 @@ const PlayListPage = () => {
   const [playlist,setPlaylist] = useState("");
   const [err,setErr] = useState("");
 
-  const {dispatch,playlists} = useVideos();
+  const {removePlaylist,createPlaylist,playlists} = useVideos();
 
-  const createPlaylist = (e) => {
+  const handleSubmit = (e) => {
    e.preventDefault();
 
    if(playlist !== "") {
-       dispatch({type:"CREATE_PLAYLIST",payload:{id:nanoid(),name:playlist,videos:[]}});
+       createPlaylist(playlist);
        setPlaylist("");
        setShow(false);
    }
@@ -36,11 +35,11 @@ const PlayListPage = () => {
         <div className="playlist">
       { 
           playlists.map( item => (
-                  <div className="playlist__item" key={item.id}>
-                    <i onClick={ () => dispatch({type:"REMOVE_PLAYLIST",payload:item._id}) } className="fa fa-trash ml-2 text-danger deleteIcon"></i>
+                  <div className="playlist__item" key={item._id}>
+                    <i onClick={ () => removePlaylist(item._id) } className="fa fa-trash ml-2 text-danger deleteIcon"></i>
                     <span>{item.name.toUpperCase()}</span>
                     <small>{item.videos.length} Videos</small>
-                    <Link className="playlist__item__link" to={{pathname:`/playlist/${item.id}`}} state={{videos:item.videos}}>View Playlist</Link>
+                    <Link className="playlist__item__link" to={{pathname:`/playlist/${item._id}`}} state={{videos:item.videos}}>View Playlist</Link>
                   </div>
          ) )
       }
@@ -53,7 +52,7 @@ const PlayListPage = () => {
             <button className="modal-dismiss" onClick={() => setShow(false)}>x</button>
           </div>
           <div className="modal-body bg-dark text-light">
-             <form onSubmit={createPlaylist}>
+             <form onSubmit={handleSubmit}>
                <label><small>Enter Name :</small> </label>
                <input type="text" className="playlist__input" value={playlist} onChange={ (e) => setPlaylist(e.target.value) }/>
                <span className="invalid-feedback">{err}</span>
@@ -61,7 +60,7 @@ const PlayListPage = () => {
           </div>
           <div className="modal-footer bg-dark text-light">
             <button className="btn btn-danger" onClick={() => setShow(false)}>Cancel</button>
-            <button className="btn btn-success" onClick={createPlaylist}>Ok</button>
+            <button className="btn btn-success" onClick={handleSubmit}>Ok</button>
           </div>
          </div>
         </div>}

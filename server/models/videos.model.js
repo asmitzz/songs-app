@@ -1,6 +1,6 @@
 const mongoose = require('mongoose');
 
-const videoSchema = mongoose.Schema({
+const videoSchema = new mongoose.Schema({
    videoID:{
        type:String,
        required:true
@@ -20,18 +20,24 @@ const videoSchema = mongoose.Schema({
        required:true,
        trim:true
    },
-   views:{
-       type:Number,
-       default:0
-   },
-   like:{
-       type:Number,
-       default:0
-   },
-   dislike:{
-      type:Number,
-      default:0
-   }
+   views:[
+       {
+        type:mongoose.Schema.Types.ObjectId,
+        ref:"User"
+       }
+   ],
+   like:[
+    {
+     type:mongoose.Schema.Types.ObjectId,
+     ref:"User"
+    }
+   ],
+   dislike:[
+    {
+     type:mongoose.Schema.Types.ObjectId,
+     ref:"User"
+    }
+   ]
 },{timestamps:true});
 
 module.exports = mongoose.model("Video",videoSchema);

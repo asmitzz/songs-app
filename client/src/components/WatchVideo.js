@@ -2,12 +2,11 @@ import { useState } from "react";
 import ReactPlayer from "react-player";
 import { Link,useLocation,useParams,useNavigate } from "react-router-dom";
 import { useVideos } from "../contexts/VideosContextProvider";
-import {nanoid} from 'nanoid';
 import Backdrop from "../utils/Backdrop/Backdrop";
 import {useAuth} from "../contexts/AuthContext";
 
 const WatchVideo = () => {
-    const {playlists,allVideos,watchLater,handleWatchLater,addToHistory,addVideoToPlaylist,dispatch} = useVideos();
+    const {playlists,allVideos,watchLater,handleWatchLater,addToHistory,addVideoToPlaylist,createPlaylist} = useVideos();
 
     const {videoID} = useParams();
     const videos = useLocation()?.state?.videos || allVideos;
@@ -23,11 +22,11 @@ const WatchVideo = () => {
 
     const navigate = useNavigate();
 
-    const createPlaylist = (e) => {
+    const handleSubmit = (e) => {
       e.preventDefault();
 
       if(playlistName !== "") {
-          dispatch({type:"CREATE_PLAYLIST",payload:{id:nanoid(),name:playlistName,videos:[]}});
+          createPlaylist(playlistName);
           setPlaylistName("");
           setCreatePlaylistBtn(false);
       }
@@ -47,11 +46,11 @@ const WatchVideo = () => {
                  <h4 className="video__title">{video.title}</h4>
                  <div className="video__card__footer">
                      <div className="video__card__footer__left">
-                       <small>{video.views}&nbsp;views • {video.releasedDate}</small>
+                       <small>{video.length}&nbsp;views • {video.releasedDate}</small>
                      </div>
                      <div className="video__card__footer__right">
-                       <button className="video__card__footer__button"><i className="fa fa-thumbs-up"></i>&nbsp;{video.like}</button>
-                       <button className="video__card__footer__button"><i className="fa fa-thumbs-down"></i>&nbsp;{video.dislike}</button>
+                       <button className="video__card__footer__button"><i className="fa fa-thumbs-up"></i>&nbsp;{video.like.length}</button>
+                       <button className="video__card__footer__button"><i className="fa fa-thumbs-down"></i>&nbsp;{video.dislike.length}</button>
                        <button onClick={isUserloggedIn ? () => setShowPlaylist(true) : () => navigate("/login",{state:{from:path}})} className="video__card__footer__button"><i className="fa fa-music"></i>&nbsp;SAVE</button>
                      </div>
                  </div>
@@ -68,7 +67,7 @@ const WatchVideo = () => {
                              <div className="video__card__content">
                               <h5>{video.title}</h5>
                                <br/>
-                               <small>{video.views}&nbsp;views • {video.releasedDate}</small>
+                               <small>{video.views.length}&nbsp;views • {video.releasedDate}</small>
                              </div>
                          </div>
                         </Link>
@@ -91,7 +90,7 @@ const WatchVideo = () => {
 
                        {playlists.map( (list,index) => (
                          <div className="modal__content__item" key={list._id}>
-                           <input type="checkbox" defaultChecked={list.videos.find(v => v._id === videoID)} onChange={() => addVideoToPlaylist(video,list._id,index)} style={{cursor:"pointer"}}/>
+                           <input type="checkbox" defaultChecked={list.videos.find(v => v._id === videoID)} onChange={() => addVideoToPlaylist(video._id,list._id,index)} style={{cursor:"pointer"}}/>
                            <label><small>{list.name}</small></label>
                          </div>
                        ) )}
@@ -106,7 +105,7 @@ const WatchVideo = () => {
                         </button>
                         ) :
                         (
-                        <form onSubmit={createPlaylist}>
+                        <form onSubmit={handleSubmit}>
                            <label className="form__label">Name</label>
                            <input value={playlistName} onChange={(e) => setPlaylistName(e.target.value)} className="form__control" type="text"/>
                            <small>{err}</small>

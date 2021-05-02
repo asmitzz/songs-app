@@ -53,7 +53,6 @@ const login = async(req,res) => {
    }
 }
 
-
 const checkUser = async(req, res, next,uid) => {
    const user = await Users.findOne({_id:uid},{password:0,createdAt:0,updatedAt:0,__v:0}).lean()
    .populate({path:"history",model:"Video"})
@@ -75,53 +74,4 @@ const getUser = (req, res) => {
    }
 }
 
-const handleWatchLater = async(req, res) => {
-   const {uid} = req.params;
-   const user = await Users.findOne({_id:uid});
-   const {videoID} = req.body;
-
-   if(user.watchLater.find(vid => vid == videoID)){
-       await user.watchLater.remove(videoID);
-       await user.save();
-       return res.status(200).json({success: true,message:"video removed successfully"});
-   }
-
-   user.watchLater.push(videoID);
-   await user.save((err,result) => {
-      if(err){
-         return res.status(404).json({success:false,message:"video is not added"})
-      }
-      res.status(200).json({success:true,message:"video added successfully"})
-   });
-}
-
-const addToHistory = async(req, res) => {
-   const {uid} = req.params;
-   const user = await Users.findOne({_id:uid});
-   const {videoID} = req.body;
-
-   if(user.history.find(vid => vid == videoID)){
-       await user.history.remove(videoID);
-       user.history.push(videoID);
-       await user.save();
-       return res.status(200).json({success: true,message:"video added successfully"});
-   }
-
-   user.history.push(videoID);
-   await user.save((err,result) => {
-      if(err){
-         return res.status(404).json({success:false,message:"video is not added"})
-      }
-      res.status(200).json({success:true,message:"video added successfully"})
-   });
-}
-
-const removeFromHistory = async(req, res) => {
-   const {uid,videoID} = req.params;
-   const user = await Users.findOne({_id:uid});
-   await user.history.remove(videoID);
-   await user.save();
-   res.status(200).json({success:true,message:"video removed successfully"})
-}
-
-module.exports = { signup,login,getUser,checkUser,handleWatchLater,addToHistory,removeFromHistory };
+module.exports = { signup,login,getUser,checkUser };
