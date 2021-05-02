@@ -1,24 +1,40 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import ReactPlayer from "react-player";
 import { Link,useLocation,useParams,useNavigate } from "react-router-dom";
 import { useVideos } from "../contexts/VideosContextProvider";
 import Backdrop from "../utils/Backdrop/Backdrop";
 import {useAuth} from "../contexts/AuthContext";
+import axios from 'axios';
 
 const VideoPlayer = () => {
-    const {playlists,allVideos,watchLater,handleWatchLater,addToHistory,addVideoToPlaylist,createPlaylist} = useVideos();
-
     const {videoID} = useParams();
-    const videos = useLocation()?.state?.videos || allVideos;
+
+    useEffect( () => {
+      (async function(){
+        try {
+        const {data} = await axios.get(`https://hotmusic20-21.herokuapp.com/api/allvideos`);
+        const video = data.allVideos.find( v => v._id === videoID);
+        setVideos(data.allVideos)
+        setVideo(video)
+        } catch (error) {
+          console.log(error);
+        }
+      })()
+    },[videoID])
+
+    const {playlists,watchLater,handleWatchLater,addToHistory,addVideoToPlaylist,createPlaylist} = useVideos();
+
+
     const path = useLocation()?.pathname;
-    const video = videos?.find(v => v._id === videoID);
+    const [videos,setVideos] = useState([]);
+    const [video,setVideo] = useState({title:"",releasedDate:"",url:"",like:[],dislike:[],views:[]});
 
     const [showPlaylist, setShowPlaylist] = useState(false);
     const [playlistName, setPlaylistName] = useState("");
     const [createPlaylistBtn, setCreatePlaylistBtn] = useState(false);
     const [err,setErr] = useState("");
 
-    const {isUserloggedIn} = useAuth();
+    const {isUserloggedIn,uid} = useAuth();
 
     const navigate = useNavigate();
 
@@ -35,22 +51,64 @@ const VideoPlayer = () => {
       }
      }
 
+     const likeVideo = async(videoID) => {
+      try {
+        const {status,data} = await axios.post(`https://hotmusic20-21.herokuapp.com/api/videos/like/${uid}/${videoID}`);
+        if(status === 200){
+          setVideo(data.video)
+        }
+      } catch (error) {
+          console.log(error);
+      }
+  }
+
+  const dislikeVideo = async(videoID) => {
+      try {
+        const {status,data} = await axios.post(`https://hotmusic20-21.herokuapp.com/api/videos/dislike/${uid}/${videoID}`);
+        if(status === 200){
+          setVideo(data.video)
+        }
+      } catch (error) {
+          console.log(error);
+      }
+  }
+
+  const handleViews = async(videoID) => {
+      try {
+        const {status,data} = await axios.post(`https://hotmusic20-21.herokuapp.com/api/videos/views/${uid}/${videoID}`);
+        if(status === 200){
+          setVideo(data.video)
+        }
+      } catch (error) {
+          console.log(error);
+      }
+  }
+
+  const handleOnPlay = (video) => {
+    if(isUserloggedIn){
+      addToHistory(video);
+    }
+    if(!video.views.find( u => u === uid )){
+      handleViews(video._id)
+    }
+ }
+
     return video ? (
         <div className="watch__video__container">
 
            <section className="left__section">
               <div className="video__card">
                  <div className='player-wrapper'>
-                   <ReactPlayer width="100%" className='react-player' height="100%" playing={true} url={video.url} controls={true} onPlay={() => isUserloggedIn ? addToHistory(video) : ""}/>
+                   <ReactPlayer width="100%" className='react-player' height="100%" playing={true} url={video.url} controls={true} onPlay={() => handleOnPlay(video)}/>
                  </div>
                  <h4 className="video__title">{video.title}</h4>
                  <div className="video__card__footer">
                      <div className="video__card__footer__left">
-                       <small>{video.length}&nbsp;views • {video.releasedDate}</small>
+                       <small>{video.views.length}&nbsp;views • {video.releasedDate}</small>
                      </div>
                      <div className="video__card__footer__right">
-                       <button className="video__card__footer__button"><i className="fa fa-thumbs-up"></i>&nbsp;{video.like.length}</button>
-                       <button className="video__card__footer__button"><i className="fa fa-thumbs-down"></i>&nbsp;{video.dislike.length}</button>
+                       <button onClick={() => likeVideo(video._id)} className={ video.like.find( u => u === uid ) ? "video__card__footer__button__active" : "video__card__footer__button" }><i className="fa fa-thumbs-up"></i>&nbsp;{video.like.length}</button>
+                       <button onClick={() => dislikeVideo(video._id)} className={ video.dislike.find( u => u === uid ) ? "video__card__footer__button__active" : "video__card__footer__button" }><i className="fa fa-thumbs-down"></i>&nbsp;{video.dislike.length}</button>
                        <button onClick={isUserloggedIn ? () => setShowPlaylist(true) : () => navigate("/login",{state:{from:path}})} className="video__card__footer__button"><i className="fa fa-music"></i>&nbsp;SAVE</button>
                      </div>
                  </div>

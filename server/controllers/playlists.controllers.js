@@ -18,7 +18,7 @@ const createPlaylist = async(req, res) => {
          res.status(200).json({success:true,playlists:user.playlists,message:"playlist created successfully"})
        }
        if(err){
-        return res.status(404).json({success:false,message:"something went wrong with server"})
+        return res.status(500).json({success:false,message:"something went wrong with server"})
        }
     });
 }
@@ -32,7 +32,7 @@ const deletePlaylist = async(req, res) => {
             res.status(200).json({success:true,playlists:user.playlists,message:"playlist deleted successfully"})
         }
         if(err){
-            return res.status(404).json({success:false,message:"something went wrong with server"})
+            return res.status(500).json({success:false,message:"something went wrong with server"})
         }
     });
 }
@@ -55,7 +55,7 @@ const addToPlaylist = async(req,res) => {
             res.status(200).json({success:true,playlists,message:"video added successfully"});
         }
         if(err){
-            return res.status(404).json({success:false,message:"something went wrong with server"})
+            return res.status(500).json({success:false,message:"something went wrong with server"})
         }
     });    
 }
@@ -78,7 +78,7 @@ const removeFromPlaylist = async(req,res) => {
             return res.status(200).json({success:true,playlists,message:"video removed successfully"});
         }
         if(err){
-           return res.status(404).json({success:false,message:"something went wrong with server"})
+           return res.status(500).json({success:false,message:"something went wrong with server"})
         }
     });    
 }

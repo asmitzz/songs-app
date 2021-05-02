@@ -58,10 +58,6 @@ export const VideosContextProvider = ({children}) => {
 
     const [{videosByCategory,playlists,watchLater,history,userDetails}, dispatch] = useReducer(VideosReducer, {videosByCategory:[],playlists:[],watchLater:[],history:[],userDetails:{}});
    
-    const allVideos = videosByCategory.reduce( (acc,cat) => {
-        return acc.concat(cat.videos)
-     },[]);
-
      const handleWatchLater = async(video) => {
         try {
             await axios.post(`https://hotmusic20-21.herokuapp.com/api/watchlater/${uid}/${video._id}`);
@@ -147,7 +143,7 @@ export const VideosContextProvider = ({children}) => {
     }
 
     return (
-        <VideosContext.Provider value={{userDetails,createPlaylist,removePlaylist,allVideos,videosByCategory,watchLater,history,playlists,handleWatchLater,addToHistory,removeFromHistory,addVideoToPlaylist,removeVideoFromPlaylist,dispatch}}>
+        <VideosContext.Provider value={{userDetails,createPlaylist,removePlaylist,videosByCategory,watchLater,history,playlists,handleWatchLater,addToHistory,removeFromHistory,addVideoToPlaylist,removeVideoFromPlaylist,dispatch}}>
            {children}
         </VideosContext.Provider>
     );
