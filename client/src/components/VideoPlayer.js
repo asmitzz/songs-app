@@ -8,25 +8,26 @@ import axios from 'axios';
 
 const VideoPlayer = () => {
     const {videoID} = useParams();
+    const {playlists,videos,watchLater,handleWatchLater,addToHistory,addVideoToPlaylist,createPlaylist} = useVideos();
 
     useEffect( () => {
       (async function(){
         try {
-        const {data} = await axios.get(`https://hotmusic20-21.herokuapp.com/api/allvideos`);
-        const video = data.allVideos.find( v => v._id === videoID);
-        setVideos(data.allVideos)
-        setVideo(video)
+        const {data} = await axios.get(`https://hotmusic20-21.herokuapp.com/api/videos/${videoID}`);
+        setVideo(data.video)
         } catch (error) {
           console.log(error);
         }
       })()
+
+      window.scroll({top:0, behavior:'smooth'})
+
+      return () => {
+        setVideo({title:"",releasedDate:"",url:"",like:[],dislike:[],views:[]})
+      }
     },[videoID])
 
-    const {playlists,watchLater,handleWatchLater,addToHistory,addVideoToPlaylist,createPlaylist} = useVideos();
-
-
     const path = useLocation()?.pathname;
-    const [videos,setVideos] = useState([]);
     const [video,setVideo] = useState({title:"",releasedDate:"",url:"",like:[],dislike:[],views:[]});
 
     const [showPlaylist, setShowPlaylist] = useState(false);
@@ -52,6 +53,10 @@ const VideoPlayer = () => {
      }
 
      const likeVideo = async(videoID) => {
+      if(!isUserloggedIn){
+        navigate("/login",{state:{from:path}})
+        return;
+      }
       try {
         const {status,data} = await axios.post(`https://hotmusic20-21.herokuapp.com/api/videos/like/${uid}/${videoID}`);
         if(status === 200){
@@ -63,6 +68,10 @@ const VideoPlayer = () => {
   }
 
   const dislikeVideo = async(videoID) => {
+      if(!isUserloggedIn){
+        navigate("/login",{state:{from:path}});
+        return;
+      }
       try {
         const {status,data} = await axios.post(`https://hotmusic20-21.herokuapp.com/api/videos/dislike/${uid}/${videoID}`);
         if(status === 200){
@@ -87,9 +96,9 @@ const VideoPlayer = () => {
   const handleOnPlay = (video) => {
     if(isUserloggedIn){
       addToHistory(video);
-    }
-    if(!video.views.find( u => u === uid )){
-      handleViews(video._id)
+      if(!video.views.find( u => u === uid )){
+        handleViews(video._id)
+      }
     }
  }
 
@@ -119,7 +128,7 @@ const VideoPlayer = () => {
                <h3 className="right__section__heading">All Videos</h3>
                 { 
                     videos.map( video => video._id !== videoID ?(
-                        <Link key={video._id} to={{pathname:`/watch/${video._id}`}} state={{type:"Related videos",videos}} className="thumbnail__link">
+                        <Link key={video._id} to={`/watch/${video._id}`} className="thumbnail__link">
                            <div className="video__card">
                              <ReactPlayer url={video.url} width="150px" height="90px" playIcon={<i className="fas fa-play-circle"></i>} light={true} alt="thumbnail"/>
                              <div className="video__card__content">

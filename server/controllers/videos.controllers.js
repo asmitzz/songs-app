@@ -10,17 +10,23 @@ const checkVideo = async(req,res,next,videoID) => {
     next();
 }
 
+const getVideo = async(req, res) => {
+    const {videoID} = req.params;
+    const video = await Videos.findById(videoID).lean();
+    res.status(200).json({success:true,video})
+}
+
+const getAllVideos = async(req, res) => {
+    const videos = await Videos.find({},{createdAt:0,__v:0}).lean().populate("category");
+    res.status(200).json({success:true,videos})
+}
+
 const getVideosByCategory = async(req, res) => {
     const videosByCategory = await Category.find({}).populate({
         path:"videos",populate:{ path:"videos",model:"Video" }
     }).lean();
 
     res.status(200).json({success:true,videosByCategory})
-}
-
-const getAllVideos = async(req, res) => {
-    const allVideos = await Videos.find({}).lean();
-    res.status(200).json({success:true,allVideos})
 }
 
 const updateLike = async(req, res) => {
@@ -94,4 +100,4 @@ const updateViews = async(req, res) => {
     });
 }
 
-module.exports = {checkVideo,getAllVideos, getVideosByCategory,updateLike,updateDislike,updateViews};
+module.exports = {checkVideo,getVideo,getAllVideos, getVideosByCategory,updateLike,updateDislike,updateViews};

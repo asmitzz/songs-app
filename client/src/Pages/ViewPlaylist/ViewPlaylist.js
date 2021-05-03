@@ -25,7 +25,7 @@ const ViewPlaylist = () => {
             {
                 videos.map( video => (
                   <div key={video._id}>
-                  <Link to={`/watch/${video._id}`} state={{type:"All videos",videos}} className="thumbnail__link">
+                  <Link to={`/watch/${video._id}`} className="thumbnail__link">
                     <ReactPlayer width="100%" height="180px" playIcon={<i className="fas fa-play-circle"></i>} url={video.url} light={true}/>
                   </Link>
                      <div className="d-flex justify-content-space-between">

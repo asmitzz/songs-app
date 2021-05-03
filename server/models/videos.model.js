@@ -1,9 +1,9 @@
 const mongoose = require('mongoose');
 
 const videoSchema = new mongoose.Schema({
-   videoID:{
-       type:String,
-       required:true
+   category:{
+       type:mongoose.Schema.Types.ObjectId,
+       ref:"Category"
    },
    title:{
        type:String,

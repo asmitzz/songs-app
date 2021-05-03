@@ -7,16 +7,27 @@ const addToHistory = async(req, res) => {
     if(user.history.find(vid => vid == videoID)){
         await user.history.remove(videoID);
         user.history.push(videoID);
-        await user.save();
-        return res.status(200).json({success: true,message:"video added successfully"});
+        await user.save(async(err,user) => {
+            if(user){
+               const {history} = await user.execPopulate({path:"history",populate:"videos"});
+               return res.status(200).json({success: true,history,message:"video added successfully"});
+            }
+            if(err){
+               return res.status(500).json({success:false,message:"Internal server error"});
+            }
+        });
+        return;
     }
  
     user.history.push(videoID);
-    await user.save((err,result) => {
+    await user.save(async(err,user) => {
        if(err){
-          return res.status(404).json({success:false,message:"video is not added"})
+          return res.status(505).json({success:false,message:"Internal server error"})
        }
-       res.status(200).json({success:true,message:"video added successfully"})
+       if(user){
+         const {history} = await user.execPopulate({path:"history",populate:"videos"});
+         return res.status(200).json({success: true,history,message:"video added successfully"});
+       }
     });
  }
  
@@ -24,8 +35,15 @@ const addToHistory = async(req, res) => {
     const {uid,videoID} = req.params;
     const user = await Users.findOne({_id:uid});
     await user.history.remove(videoID);
-    await user.save();
-    res.status(200).json({success:true,message:"video removed successfully"})
+    await user.save(async(err,user)=>{
+       if(user){
+         const {history} = await user.execPopulate({path:"history",populate:"videos"});
+         res.status(200).json({success:true,history,message:"video removed successfully"})
+       }
+       if(err){
+         return res.status(505).json({success:false,message:"Internal server error"})
+       }
+    });
  }
 
  module.exports = {addToHistory,removeFromHistory}

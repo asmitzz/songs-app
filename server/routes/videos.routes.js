@@ -1,10 +1,11 @@
 const express = require('express');
 const router = express.Router();
 
-const { checkVideo,getAllVideos,getVideosByCategory,updateLike,updateDislike,updateViews } = require('../controllers/videos.controllers');
+const { checkVideo,getVideo,getAllVideos,getVideosByCategory,updateLike,updateDislike,updateViews } = require('../controllers/videos.controllers');
 
 router.param("videoID",checkVideo);
-router.get("/allvideos",getAllVideos);
+router.get("/videos/:videoID",getVideo);
+router.get("/videos",getAllVideos);
 router.get("/videosbycategory",getVideosByCategory);
 router.post("/videos/like/:uid/:videoID",updateLike);
 router.post("/videos/dislike/:uid/:videoID",updateDislike);

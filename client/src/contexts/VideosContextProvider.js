@@ -4,23 +4,24 @@ import {useAuth} from "./AuthContext";
 export const VideosContext = createContext();
 
 export const VideosContextProvider = ({children}) => {
-    const {uid} = useAuth();
+    const {uid,isUserloggedIn} = useAuth();
 
     useEffect(() => {
         (async function(){
           try {
-          const {data} = await axios.get(`https://hotmusic20-21.herokuapp.com/api/videosbycategory`);
-          const videosByCategory = data?.videosByCategory;
-          dispatch({type:"INITIAL_STATE",payload:{videosByCategory}})
+          const {data} = await axios.get(`https://hotmusic20-21.herokuapp.com/api/videos`);
+          const videos = data?.videos;
+          dispatch({type:"INITIAL_STATE",payload:{videos}})
           } catch (error) {
             console.log(error);
           }
         })()
-    },[uid])
+    },[])
     
     useEffect(() => {
         (async function(){
           try {
+          if(!isUserloggedIn) return;
           const {data} = await axios.get(`https://hotmusic20-21.herokuapp.com/api/users/${uid}`);
           const user = data?.user;
 
@@ -29,16 +30,14 @@ export const VideosContextProvider = ({children}) => {
              console.log(error);
           }
         })()
-    },[uid])
+    },[isUserloggedIn,uid])
 
     const VideosReducer = (state,action) => {
         switch (action.type) {
             case "INITIAL_STATE":
             return {...state,...action.payload}
-            case "ADD_TO_WATCH_LATER":
-            return {...state,watchLater:[action.payload,...state.watchLater]}    
-            case "REMOVE_FROM_WATCH_LATER":
-            return {...state,watchLater:state.watchLater.filter( v => v._id !== action.payload )}
+            case "UPDATE_WATCH_LATER":
+            return {...state,watchLater:action.payload}    
             case "CREATE_PLAYLIST":
             return {...state,playlists:action.payload};
             case "REMOVE_PLAYLIST":
@@ -47,25 +46,33 @@ export const VideosContextProvider = ({children}) => {
             return {...state,playlists:action.payload}
             case "REMOVE_FROM_PLAYLIST":
             return {...state,playlists:action.payload}
-            case "ADD_TO_HISTORY":
-            return {...state, history:[action.payload,...state.history]}
-            case "REMOVE_FROM_HISTORY":
-            return {...state, history:state.history.filter( v => v._id !== action.payload)}
+            case "UPDATE_HISTORY":
+            return {...state, history:action.payload}
             default:
             return state;
         }
     }
 
-    const [{videosByCategory,playlists,watchLater,history,userDetails}, dispatch] = useReducer(VideosReducer, {videosByCategory:[],playlists:[],watchLater:[],history:[],userDetails:{}});
+    const [{videos,playlists,watchLater,history,userDetails}, dispatch] = useReducer(VideosReducer, {videos:[],playlists:[],watchLater:[],history:[],userDetails:{}});
    
+    const videosByCategory = videos.reduce((acc,i) => {
+        if(acc.find(cat => cat._id === i.category._id)){
+          return acc.map(cat => {
+             if(cat._id === i.category._id){
+               return {...cat,videos:[...cat.videos,i]}
+             }
+              return cat
+          })
+        }
+        return [...acc,{_id:i.category._id,name:i.category.name,videos:[i]}]
+     },[])
+
      const handleWatchLater = async(video) => {
         try {
-            await axios.post(`https://hotmusic20-21.herokuapp.com/api/watchlater/${uid}/${video._id}`);
-
-            if( watchLater.find( v => v._id === video._id) ){
-                return dispatch({type:"REMOVE_FROM_WATCH_LATER",payload:video._id});
-            };
-            dispatch({type:"ADD_TO_WATCH_LATER",payload:video});
+           const {data,status} = await axios.post(`https://hotmusic20-21.herokuapp.com/api/watchlater/${uid}/${video._id}`);
+           if(status === 200){
+              dispatch({ type:"UPDATE_WATCH_LATER",payload:data.watchLater })
+           }
         } catch (error) {
             console.log(error);
         }
@@ -122,11 +129,10 @@ export const VideosContextProvider = ({children}) => {
 
     const addToHistory = async(video) => {
         try {
-            await axios.post(`https://hotmusic20-21.herokuapp.com/api/history/${uid}/${video._id}`)
-            if( history.find( v => v._id === video._id) ){
-                dispatch({type:"REMOVE_FROM_HISTORY",payload:video._id});
-             }
-             dispatch({type:"ADD_TO_HISTORY",payload:video});
+            const {data,status} = await axios.post(`https://hotmusic20-21.herokuapp.com/api/history/${uid}/${video._id}`);
+            if(status === 200){
+                dispatch({type:"UPDATE_HISTORY",payload:data.history});
+            }
         } catch (error) {
             console.log(error);
         }
@@ -143,7 +149,7 @@ export const VideosContextProvider = ({children}) => {
     }
 
     return (
-        <VideosContext.Provider value={{userDetails,createPlaylist,removePlaylist,videosByCategory,watchLater,history,playlists,handleWatchLater,addToHistory,removeFromHistory,addVideoToPlaylist,removeVideoFromPlaylist,dispatch}}>
+        <VideosContext.Provider value={{userDetails,createPlaylist,removePlaylist,videosByCategory,videos,watchLater,history,playlists,handleWatchLater,addToHistory,removeFromHistory,addVideoToPlaylist,removeVideoFromPlaylist,dispatch}}>
            {children}
         </VideosContext.Provider>
     );

@@ -39,7 +39,7 @@ const PlayListPage = () => {
                     <i onClick={ () => removePlaylist(item._id) } className="fa fa-trash ml-2 text-danger deleteIcon"></i>
                     <span>{item.name.toUpperCase()}</span>
                     <small>{item.videos.length} Videos</small>
-                    <Link className="playlist__item__link" to={{pathname:`/playlist/${item._id}`}} state={{videos:item.videos}}>View Playlist</Link>
+                    <Link className="playlist__item__link" to={{pathname:`/playlist/${item._id}`}}>View Playlist</Link>
                   </div>
          ) )
       }

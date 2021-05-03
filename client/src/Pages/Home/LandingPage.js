@@ -25,7 +25,7 @@ const LandingPage = () => {
             <div className="landing__page__container">
             {
               videosByCategory.map( cat => (
-                <VideosSwiper key={cat._id} type={cat.type} videos={cat.videos}/>
+                <VideosSwiper key={cat._id} category={cat}/>
               ))
             }
           </div>

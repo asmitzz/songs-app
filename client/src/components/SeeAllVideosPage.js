@@ -16,17 +16,18 @@ const SeeAllVideosPage = () => {
     },[])
    
     const {videosByCategory} = useVideos();
-    const {type} = useParams();
-    const category = videosByCategory.find(v => v.type.toLowerCase() === type.toLowerCase());
-    const videos = category?.videos || [];
+    const {categoryID} = useParams();
+
+    const category = videosByCategory.find(cat => cat._id === categoryID) || {name:"",videos:[]};
+    const videos = category.videos;
     
     return (
         <div className="seeAllVideos__container">
-            <h2 className="seeAllVideos__container__header">{type}</h2>
+            <h2 className="seeAllVideos__container__header">{category.name}</h2>
             <div className="cards">
             {
                 videos.map( video => (
-                  <Link to={`/watch/${video._id}`} key={video._id} state={{videos}} className="thumbnail__link">
+                  <Link to={`/watch/${video._id}`} key={video._id} className="thumbnail__link">
                   <div>
                     <ReactPlayer width="100%" height="180px" playIcon={<i className="fas fa-play-circle"></i>} url={video.url} light={true}/>
                     <h4>{video.title}</h4>

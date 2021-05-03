@@ -22,7 +22,7 @@ const History = () => {
             {
                 history.map( video => (
                   <div key={video._id}>
-                  <Link to={`/watch/${video._id}`} state={{type:"All videos",videos:history}} className="thumbnail__link">
+                  <Link to={`/watch/${video._id}`} className="thumbnail__link">
                     <ReactPlayer width="100%" height="180px" playIcon={<i className="fas fa-play-circle"></i>} url={video.url} light={true}/>
                   </Link>
                      <div className="d-flex justify-content-space-between">
@@ -33,7 +33,7 @@ const History = () => {
                        <button className="delete__btn" onClick={() => removeFromHistory(video._id)} title="Remove"><i className="fa fa-trash"></i></button>
                      </div>
                   </div>
-                ))
+                )).reverse()
             }
             </div>
         </div>
