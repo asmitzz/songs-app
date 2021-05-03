@@ -145,11 +145,20 @@ body{
 }
 
 .seeAllVideos__container__header{
-  margin: 0.5rem;
-  padding: 0.5rem 0;
+  display: grid;
+  grid-template-columns: auto auto;
+  padding: 1rem 0;
   color: var(--secondary);
-  text-align: center;
-  box-shadow: 1px 2px 10px rgba(0, 0, 0, 0.3);
+}
+
+.seeAllVideos__container__header .header__button{
+  color: var(--secondary);
+  background:var(--primary);
+  border: none;
+  font-size: 1.3rem;
+  text-align: left;
+  margin-left: 0.7rem;
+  cursor: pointer;
 }
 
 .seeAllVideos__container .cards{
@@ -209,10 +218,6 @@ body{
   border-radius:10px;
   color: var(--primary);
   cursor: pointer;
-}
-
-.playlist__container{
-  padding: 1rem 0.5rem;
 }
 
 .playlist__container .create__btn{
@@ -579,7 +584,7 @@ body{
   width: 100%;
 }
 
-.spinner__container .circle1,.spinner__container .circle2,.spinner__container .circle3,.spinner__container .circle4,.spinner__container .circle5{
+.spinner__container .circle1,.spinner__container .circle2,.spinner__container .circle3,.spinner__container .circle4{
   height: 10px;
   margin: 0 0.1rem;
   width: 10px;
@@ -599,16 +604,13 @@ body{
 .spinner__container .circle4{
   animation: 1s loader 0.4s infinite;
 }
-.spinner__container .circle5{
-  animation: 1s loader 0.5s infinite;
-}
 
 @keyframes loader{
  from{
    transform: translateY(0);
  }
  50%{
-   transform: translateY(10px);
+   transform: translateY(5px);
    background: var(--tertiary);
  }
  100%{
@@ -638,10 +640,11 @@ body{
 }
 
 .mylibrary__container .header__button{
-  color: var(--secondary);
+    color: var(--secondary);
   background:var(--primary);
   border: none;
   font-size: 1.3rem;
+  cursor: pointer;
 }
 
 .mylibrary__container .profile{

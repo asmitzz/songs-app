@@ -1,6 +1,6 @@
 import React,{useEffect} from 'react';
 import ReactPlayer from 'react-player';
-import { Link } from 'react-router-dom';
+import { Link,useNavigate } from 'react-router-dom';
 
 import { useVideos } from '../../contexts/VideosContextProvider';
 
@@ -14,10 +14,14 @@ const History = () => {
     },[])
 
     const {history,removeFromHistory} = useVideos();
+    const navigate = useNavigate();
 
     return (
         <div className="seeAllVideos__container">
-            <h2 className="seeAllVideos__container__header">Recently Played</h2>
+            <div className="seeAllVideos__container__header">
+               <button onClick={() => navigate(-1)} className="header__button"><i className="fa fa-arrow-left"></i></button>
+                <h2>Recently Played</h2>
+            </div>
             <div className="cards">
             {
                 history.map( video => (

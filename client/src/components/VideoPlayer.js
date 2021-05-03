@@ -11,21 +11,27 @@ const VideoPlayer = () => {
     const {playlists,videos,watchLater,handleWatchLater,addToHistory,addVideoToPlaylist,createPlaylist} = useVideos();
 
     useEffect( () => {
-      (async function(){
-        try {
-        const {data} = await axios.get(`https://hotmusic20-21.herokuapp.com/api/videos/${videoID}`);
-        setVideo(data.video)
-        } catch (error) {
-          console.log(error);
-        }
-      })()
-
       window.scroll({top:0, behavior:'smooth'})
+      const video = videos.find(v => v._id === videoID)
+
+      if(video){
+        setVideo(video)
+      }
+      else{
+        (async function(){
+          try {
+          const {data} = await axios.get(`https://hotmusic20-21.herokuapp.com/api/videos/${videoID}`);
+          setVideo(data.video)
+          } catch (error) {
+            console.log(error);
+          }
+        })()
+      }
 
       return () => {
         setVideo({title:"",releasedDate:"",url:"",like:[],dislike:[],views:[]})
       }
-    },[videoID])
+    },[videoID,videos])
 
     const path = useLocation()?.pathname;
     const [video,setVideo] = useState({title:"",releasedDate:"",url:"",like:[],dislike:[],views:[]});

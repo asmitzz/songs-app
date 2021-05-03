@@ -1,14 +1,14 @@
 import React, { useState } from "react";
 import { useVideos } from "../../contexts/VideosContextProvider";
 
-import {Link} from 'react-router-dom';
+import {Link,useNavigate} from 'react-router-dom';
 
 const PlayListPage = () => {
 
   const [show,setShow] = useState(false);
   const [playlist,setPlaylist] = useState("");
   const [err,setErr] = useState("");
-
+  const navigate = useNavigate();
   const {removePlaylist,createPlaylist,playlists} = useVideos();
 
   const handleSubmit = (e) => {
@@ -26,7 +26,10 @@ const PlayListPage = () => {
 
   return (
     <div className="playlist__container">
-        <h2 className="playlist__container__header"><i className="fa fa-music"></i> My Playlist</h2>
+        <div className="seeAllVideos__container__header">
+               <button onClick={() => navigate(-1)} className="header__button"><i className="fa fa-arrow-left"></i></button>
+                <h2>My PlayLists</h2>
+        </div>
 
         <button className="primary-btn create__btn" onClick={() => setShow(true)}>
         <i className="fa fa-plus"></i> Create New Playlist

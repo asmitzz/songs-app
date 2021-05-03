@@ -7,6 +7,7 @@ import 'swiper/swiper-bundle.css';
 import 'swiper/swiper-bundle.min.css';
 import VideosSwiper from '../../components/VideosSwiper';
 import Header from '../../components/Header';
+import Spinner from '../../utils/Spinner';
 import { useVideos } from '../../contexts/VideosContextProvider';
 
 SwiperCore.use([Navigation, Pagination, Scrollbar, A11y]);
@@ -21,13 +22,13 @@ const LandingPage = () => {
 
     return (
       <div>
-            <Header/>
-            <div className="landing__page__container">
-            {
-              videosByCategory.map( cat => (
-                <VideosSwiper key={cat._id} category={cat}/>
-              ))
-            }
+          <Header/>
+          <div className="landing__page__container">
+              {
+                videosByCategory.length > 0 ? videosByCategory.map( cat => (
+                  <VideosSwiper key={cat._id} category={cat}/>
+                )) : <Spinner style={{top:"11.1%",paddingBottom:"8rem"}} show={true}/>
+              }
           </div>
       </div>
         

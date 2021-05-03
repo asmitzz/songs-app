@@ -1,6 +1,6 @@
 import React,{useEffect} from 'react';
 import ReactPlayer from 'react-player';
-import { Link,useParams } from 'react-router-dom';
+import { Link,useParams,useNavigate } from 'react-router-dom';
 
 import { useVideos } from '../../contexts/VideosContextProvider';
 
@@ -17,10 +17,13 @@ const ViewPlaylist = () => {
     const {playlistID} = useParams();
 
     const {videos,name} = playlists.find( list => list._id === playlistID);
- 
+    const navigate = useNavigate();
     return (
         <div className="seeAllVideos__container">
-            <h2 className="seeAllVideos__container__header">{name}</h2>
+            <div className="seeAllVideos__container__header">
+               <button onClick={() => navigate(-1)} className="header__button"><i className="fa fa-arrow-left"></i></button>
+                <h2>{name.toUpperCase()}</h2>
+              </div>
             <div className="cards">
             {
                 videos.map( video => (
