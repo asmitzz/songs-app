@@ -141,8 +141,10 @@ export const VideosContextProvider = ({children}) => {
 
     const removeFromHistory = async(videoID) => {
         try {
-           await axios.delete(`https://hotmusic20-21.herokuapp.com/api/history/${uid}/${videoID}`)
-           dispatch({type:"REMOVE_FROM_HISTORY",payload:videoID});
+           const {data,status} = await axios.delete(`https://hotmusic20-21.herokuapp.com/api/history/${uid}/${videoID}`)
+           if(status === 200){
+            dispatch({type:"UPDATE_HISTORY",payload:data.history});
+           }
         } catch (error) {
             console.log(error);
         }

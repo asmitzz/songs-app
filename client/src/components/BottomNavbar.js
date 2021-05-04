@@ -12,7 +12,7 @@ const BottomNavbar = () => {
             </li>
 
             <li className="nav-item">
-               <Link to="/" className="nav-link"><i className="fas fa-search " aria-hidden="true"></i><small>Search</small></Link>
+               <Link to="/search" className="nav-link"><i className="fas fa-search " aria-hidden="true"></i><small>Search</small></Link>
             </li>
 
             <li className="nav-item">

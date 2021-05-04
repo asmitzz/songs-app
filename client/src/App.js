@@ -15,13 +15,15 @@ import RouteNotFound from './utils/RouteNotFound';
 import Login from './Auth/Login';
 import SignUp from './Auth/Signup';
 import MyLibrary from './Pages/MyLibrary/MyLibrary';
+import SearchVideo from './Pages/SearchVideo/SearchVideo';
 
 const App = () => {
   return (
-    <div>
+    <div className="App">
          
           <Routes>
             <Route path="/" element={<LandingPage/>}/>
+            <Route path="/search" element={<SearchVideo/>}/>
             <Route path="/watch/:videoID" element={<VideoPlayer/>}/>
             <Route path="/videos/:categoryID" element={<SeeAllVideosPage/>}/>
             <Route path="/login" element={<Login/>}/>
