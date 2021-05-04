@@ -4,7 +4,7 @@ import ReactPlayer from 'react-player';
 import { useParams } from "react-router-dom";
 import { useVideos } from "../contexts/VideosContextProvider";
 
-import { Link } from 'react-router-dom';
+import { Link,useNavigate } from 'react-router-dom';
 
 const SeeAllVideosPage = () => {
 
@@ -17,13 +17,17 @@ const SeeAllVideosPage = () => {
    
     const {videosByCategory} = useVideos();
     const {categoryID} = useParams();
+    const navigate = useNavigate();
 
     const category = videosByCategory.find(cat => cat._id === categoryID) || {name:"",videos:[]};
     const videos = category.videos;
     
     return (
         <div className="seeAllVideos__container">
-            <h2 className="seeAllVideos__container__header">{category.name}</h2>
+             <div className="seeAllVideos__container__header">
+               <button onClick={() => navigate(-1)} className="header__button"><i className="fa fa-arrow-left"></i></button>
+                <h2>{category.name}</h2>
+            </div>
             <div className="cards">
             {
                 videos.map( video => (
