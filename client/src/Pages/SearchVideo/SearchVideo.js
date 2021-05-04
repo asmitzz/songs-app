@@ -1,9 +1,16 @@
-import { useState } from "react";
+import { useState,useEffect } from "react";
 import ReactPlayer from "react-player";
 import { Link } from "react-router-dom";
 import { useVideos } from "../../contexts/VideosContextProvider";
 
 const SearchVideo = () => {
+    useEffect( () => {
+        window.scroll({
+          behavior:"smooth",
+          top:0
+        })
+    },[])
+
     const {videos} = useVideos();
     const [input,setInput] = useState("");
 
