@@ -1,8 +1,9 @@
-import React,{useEffect} from 'react';
+import React,{useEffect, useState} from 'react';
 import ReactPlayer from 'react-player';
 import { Link,useNavigate } from 'react-router-dom';
 
 import { useVideos } from '../../contexts/VideosContextProvider';
+import Toast from '../../utils/Toast';
 
 const WatchLater = () => {
 
@@ -15,8 +16,11 @@ const WatchLater = () => {
 
     const {watchLater,handleWatchLater} = useVideos();
     const navigate = useNavigate();
+    const [errorToast,setErrorToast] = useState(false);
+
     return (
         <div className="seeAllVideos__container">
+            <Toast show={errorToast} error={true} background="red" onClick={() => setErrorToast(false)} color="white" message="Something went wrong with server"/>
             <div className="seeAllVideos__container__header">
                <button onClick={() => navigate(-1)} className="header__button"><i className="fa fa-arrow-left"></i></button>
                 <h2>Watch Later</h2>
@@ -34,7 +38,7 @@ const WatchLater = () => {
                           <h4>{video.title}</h4>
                           <small>Released date : {video.releasedDate}</small>
                        </div>
-                       <button className="delete__btn" title="Remove" onClick={()=>handleWatchLater(video)}><i className="fa fa-trash"></i></button>
+                       <button className="delete__btn" title="Remove" onClick={()=>handleWatchLater(video,setErrorToast)}><i className="fa fa-trash"></i></button>
                      </div>
                   </div>
                 ))

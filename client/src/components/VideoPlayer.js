@@ -5,10 +5,12 @@ import { useVideos } from "../contexts/VideosContextProvider";
 import Backdrop from "../utils/Backdrop/Backdrop";
 import {useAuth} from "../contexts/AuthContext";
 import axios from 'axios';
+import Toast from "../utils/Toast";
 
 const VideoPlayer = () => {
     const {videoID} = useParams();
     const {playlists,videos,watchLater,handleWatchLater,addToHistory,addVideoToPlaylist,createPlaylist} = useVideos();
+    const [errorToast,setErrorToast] = useState(false);
 
     useEffect( () => {
       window.scroll({top:0, behavior:'smooth'})
@@ -49,7 +51,7 @@ const VideoPlayer = () => {
       e.preventDefault();
 
       if(playlistName !== "") {
-          createPlaylist(playlistName);
+          createPlaylist(playlistName,setErrorToast);
           setPlaylistName("");
           setCreatePlaylistBtn(false);
       }
@@ -101,7 +103,7 @@ const VideoPlayer = () => {
 
   const handleOnPlay = (video) => {
     if(isUserloggedIn){
-      addToHistory(video);
+      addToHistory(video,setErrorToast);
       if(!video.views.find( u => u === uid )){
         handleViews(video._id)
       }
@@ -110,6 +112,7 @@ const VideoPlayer = () => {
 
     return video ? (
         <div className="watch__video__container">
+            <Toast show={errorToast} error={true} background="red" onClick={() => setErrorToast(false)} color="white" message="Something went wrong with server"/>
 
            <section className="left__section">
               <div className="video__card">
@@ -157,13 +160,13 @@ const VideoPlayer = () => {
                     </div>
                     <div className="modal__content">
                        <div className="modal__content__item">
-                          <input type="checkbox" defaultChecked={watchLater.find(v => v._id === videoID)} onChange={() => handleWatchLater(video)} style={{cursor:"pointer"}}/>
+                          <input type="checkbox" defaultChecked={watchLater.find(v => v._id === videoID)} onChange={() => handleWatchLater(video,setErrorToast)} style={{cursor:"pointer"}}/>
                           <label><small>Watch later</small></label>
                        </div>
 
                        {playlists.map( (list,index) => (
                          <div className="modal__content__item" key={list._id}>
-                           <input type="checkbox" defaultChecked={list.videos.find(v => v._id === videoID)} onChange={() => addVideoToPlaylist(video._id,list._id,index)} style={{cursor:"pointer"}}/>
+                           <input type="checkbox" defaultChecked={list.videos.find(v => v._id === videoID)} onChange={() => addVideoToPlaylist(video._id,list._id,index,setErrorToast)} style={{cursor:"pointer"}}/>
                            <label><small>{list.name}</small></label>
                          </div>
                        ) )}

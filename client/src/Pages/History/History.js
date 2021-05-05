@@ -1,7 +1,7 @@
-import React,{useEffect} from 'react';
+import React,{useEffect, useState} from 'react';
 import ReactPlayer from 'react-player';
 import { Link,useNavigate } from 'react-router-dom';
-
+import Toast from '../../utils/Toast';
 import { useVideos } from '../../contexts/VideosContextProvider';
 
 const History = () => {
@@ -15,9 +15,11 @@ const History = () => {
 
     const {history,removeFromHistory} = useVideos();
     const navigate = useNavigate();
+    const [errorToast,setErrorToast] = useState(false);
 
     return (
         <div className="seeAllVideos__container">
+            <Toast show={errorToast} error={true} background="red" onClick={() => setErrorToast(false)} color="white" message="Something went wrong with server"/>
             <div className="seeAllVideos__container__header">
                <button onClick={() => navigate(-1)} className="header__button"><i className="fa fa-arrow-left"></i></button>
                 <h2>Recently Played</h2>
@@ -34,7 +36,7 @@ const History = () => {
                           <h4>{video.title}</h4>
                           <small>Released date : {video.releasedDate}</small>
                        </div>
-                       <button className="delete__btn" onClick={() => removeFromHistory(video._id)} title="Remove"><i className="fa fa-trash"></i></button>
+                       <button className="delete__btn" onClick={() => removeFromHistory(video._id,setErrorToast)} title="Remove"><i className="fa fa-trash"></i></button>
                      </div>
                   </div>
                 )).reverse()

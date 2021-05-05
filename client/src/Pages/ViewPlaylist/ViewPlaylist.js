@@ -1,8 +1,9 @@
-import React,{useEffect} from 'react';
+import React,{useEffect, useState} from 'react';
 import ReactPlayer from 'react-player';
 import { Link,useParams,useNavigate } from 'react-router-dom';
 
 import { useVideos } from '../../contexts/VideosContextProvider';
+import Toast from '../../utils/Toast';
 
 const ViewPlaylist = () => {
 
@@ -13,6 +14,8 @@ const ViewPlaylist = () => {
         })
     },[])
 
+    const [errorToast,setErrorToast] = useState(false);
+
     const {playlists,removeVideoFromPlaylist} = useVideos();
     const {playlistID} = useParams();
 
@@ -20,6 +23,7 @@ const ViewPlaylist = () => {
     const navigate = useNavigate();
     return (
         <div className="seeAllVideos__container">
+            <Toast show={errorToast} error={true} background="red" onClick={() => setErrorToast(false)} color="white" message="Something went wrong with server"/>
             <div className="seeAllVideos__container__header">
                <button onClick={() => navigate(-1)} className="header__button"><i className="fa fa-arrow-left"></i></button>
                 <h2>{name.toUpperCase()}</h2>
@@ -36,7 +40,7 @@ const ViewPlaylist = () => {
                           <h4>{video.title}</h4>
                           <small>Released date : {video.releasedDate}</small>
                        </div>
-                       <button className="delete__btn" onClick={() => removeVideoFromPlaylist(video._id,playlistID)} title="Remove"><i className="fa fa-trash"></i></button>
+                       <button className="delete__btn" onClick={() => removeVideoFromPlaylist(video._id,playlistID,setErrorToast)} title="Remove"><i className="fa fa-trash"></i></button>
                      </div>
                   </div>
                 ))

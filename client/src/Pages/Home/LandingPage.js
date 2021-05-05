@@ -9,12 +9,13 @@ import VideosSwiper from '../../components/VideosSwiper';
 import Header from '../../components/Header';
 import Spinner from '../../utils/Spinner';
 import { useVideos } from '../../contexts/VideosContextProvider';
+import Toast from '../../utils/Toast';
 
 SwiperCore.use([Navigation, Pagination, Scrollbar, A11y]);
 
 const LandingPage = () => {
 
-    const {videosByCategory} = useVideos(); 
+    const {videosByCategory,errorToast,setErrorToast} = useVideos(); 
 
     useEffect( () => {
         window.scroll({top:0, behavior:'smooth'})
@@ -22,6 +23,7 @@ const LandingPage = () => {
 
     return (
       <div>
+          <Toast show={errorToast} error={true} background="red" onClick={() => setErrorToast(false)} color="white" message="Something went wrong with server"/>
           <Header/>
           <div className="landing__page__container">
               {

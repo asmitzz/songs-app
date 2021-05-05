@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { useVideos } from "../../contexts/VideosContextProvider";
 
 import {Link,useNavigate} from 'react-router-dom';
+import Toast from "../../utils/Toast";
 
 const PlayListPage = () => {
 
@@ -10,12 +11,13 @@ const PlayListPage = () => {
   const [err,setErr] = useState("");
   const navigate = useNavigate();
   const {removePlaylist,createPlaylist,playlists} = useVideos();
+  const [errorToast,setErrorToast] = useState(false);
 
   const handleSubmit = (e) => {
    e.preventDefault();
 
    if(playlist !== "") {
-       createPlaylist(playlist);
+       createPlaylist(playlist,setErrorToast);
        setPlaylist("");
        setShow(false);
    }
@@ -26,6 +28,7 @@ const PlayListPage = () => {
 
   return (
     <div className="playlist__container">
+        <Toast show={errorToast} error={true} background="red" onClick={() => setErrorToast(false)} color="white" message="Something went wrong with server"/>
         <div className="seeAllVideos__container__header">
                <button onClick={() => navigate(-1)} className="header__button"><i className="fa fa-arrow-left"></i></button>
                 <h2>My PlayLists</h2>
@@ -39,7 +42,7 @@ const PlayListPage = () => {
       { 
           playlists.map( item => (
                   <div className="playlist__item" key={item._id}>
-                    <i onClick={ () => removePlaylist(item._id) } className="fa fa-trash ml-2 text-danger deleteIcon"></i>
+                    <i onClick={ () => removePlaylist(item._id,setErrorToast) } className="fa fa-trash ml-2 text-danger deleteIcon"></i>
                     <span>{item.name.toUpperCase()}</span>
                     <small>{item.videos.length} Videos</small>
                     <Link className="playlist__item__link" to={{pathname:`/playlist/${item._id}`}}>View Playlist</Link>

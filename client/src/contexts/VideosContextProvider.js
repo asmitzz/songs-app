@@ -1,10 +1,11 @@
-import React, { createContext, useContext, useEffect, useReducer } from 'react';
+import React, { createContext, useContext, useEffect, useReducer, useState } from 'react';
 import axios from 'axios';
 import {useAuth} from "./AuthContext";
 export const VideosContext = createContext();
 
 export const VideosContextProvider = ({children}) => {
     const {uid,isUserloggedIn} = useAuth();
+    const [errorToast,setErrorToast] = useState(false);
 
     useEffect(() => {
         (async function(){
@@ -13,7 +14,7 @@ export const VideosContextProvider = ({children}) => {
           const videos = data?.videos;
           dispatch({type:"INITIAL_STATE",payload:{videos}})
           } catch (error) {
-            console.log(error);
+            setErrorToast(true)
           }
         })()
     },[])
@@ -27,7 +28,7 @@ export const VideosContextProvider = ({children}) => {
 
           dispatch({type:"INITIAL_STATE",payload:{userDetails:user,playlists:user.playlists,watchLater:user.watchLater,history:user.history}})
           } catch (error) {
-             console.log(error);
+             setErrorToast(true)
           }
         })()
     },[isUserloggedIn,uid])
@@ -67,40 +68,49 @@ export const VideosContextProvider = ({children}) => {
         return [...acc,{_id:i.category._id,name:i.category.name,videos:[i]}]
      },[])
 
-     const handleWatchLater = async(video) => {
+     const handleWatchLater = async(video,toast) => {
         try {
            const {data,status} = await axios.post(`https://hotmusic20-21.herokuapp.com/api/watchlater/${uid}/${video._id}`);
            if(status === 200){
               dispatch({ type:"UPDATE_WATCH_LATER",payload:data.watchLater })
            }
         } catch (error) {
-            console.log(error);
+            toast(true);
+            setTimeout( () => {
+                toast(false);
+            },2000)
         }
     }
 
-    const createPlaylist = async(name) => {
+    const createPlaylist = async(name,toast) => {
         try {
             const {status,data} = await axios.post(`https://hotmusic20-21.herokuapp.com/api/playlists/${uid}`,{name});
             if(status === 200){
                 dispatch({type:"CREATE_PLAYLIST",payload:data.playlists});
             }
         } catch (error) {
-            console.log(error);
+            toast(true);
+            setTimeout( () => {
+                toast(false);
+            },2000)
         }
     }
 
-    const removePlaylist = async(playlistID) => {
+    const removePlaylist = async(playlistID,toast) => {
         try {
             const {status,data} = await axios.delete(`https://hotmusic20-21.herokuapp.com/api/playlists/${uid}/${playlistID}`);
             if(status === 200){
                 dispatch({type:"REMOVE_PLAYLIST",payload:data.playlists});
             }
         } catch (error) {
-            console.log(error);
+            toast(true);
+            setTimeout( () => {
+                toast(false);
+            },2000)
         }
     }
 
-    const addVideoToPlaylist = async(videoID,playlistID,playlistIndex) => {
+    const addVideoToPlaylist = async(videoID,playlistID,playlistIndex,toast) => {
         try {
             if( playlists[playlistIndex].videos.find( v => v._id === videoID) ){
                 const {status,data} = await axios.delete(`https://hotmusic20-21.herokuapp.com/api/playlists/${uid}/${playlistID}/${videoID}`);
@@ -115,43 +125,52 @@ export const VideosContextProvider = ({children}) => {
                 dispatch({type:"ADD_TO_PLAYLIST",payload:data.playlists});
             }
         } catch (error) {
-            console.log(error);
+            toast(true);
+            setTimeout( () => {
+                toast(false);
+            },2000)
         }
         
     }
 
-    const removeVideoFromPlaylist = async(videoID,playlistID) => {
+    const removeVideoFromPlaylist = async(videoID,playlistID,toast) => {
         const {status,data} = await axios.delete(`https://hotmusic20-21.herokuapp.com/api/playlists/${uid}/${playlistID}/${videoID}`);
          if(status === 200){
             return dispatch({type:"REMOVE_FROM_PLAYLIST",payload:data.playlists});
          }
     }
 
-    const addToHistory = async(video) => {
+    const addToHistory = async(video,toast) => {
         try {
             const {data,status} = await axios.post(`https://hotmusic20-21.herokuapp.com/api/history/${uid}/${video._id}`);
             if(status === 200){
                 dispatch({type:"UPDATE_HISTORY",payload:data.history});
             }
         } catch (error) {
-            console.log(error);
+            toast(true);
+            setTimeout( () => {
+                toast(false);
+            },2000)
         }
         
     }
 
-    const removeFromHistory = async(videoID) => {
+    const removeFromHistory = async(videoID,toast) => {
         try {
            const {data,status} = await axios.delete(`https://hotmusic20-21.herokuapp.com/api/history/${uid}/${videoID}`)
            if(status === 200){
             dispatch({type:"UPDATE_HISTORY",payload:data.history});
            }
         } catch (error) {
-            console.log(error);
+            toast(true);
+            setTimeout( () => {
+                toast(false);
+            },2000)
         }
     }
 
     return (
-        <VideosContext.Provider value={{userDetails,createPlaylist,removePlaylist,videosByCategory,videos,watchLater,history,playlists,handleWatchLater,addToHistory,removeFromHistory,addVideoToPlaylist,removeVideoFromPlaylist,dispatch}}>
+        <VideosContext.Provider value={{errorToast,setErrorToast,userDetails,createPlaylist,removePlaylist,videosByCategory,videos,watchLater,history,playlists,handleWatchLater,addToHistory,removeFromHistory,addVideoToPlaylist,removeVideoFromPlaylist,dispatch}}>
            {children}
         </VideosContext.Provider>
     );

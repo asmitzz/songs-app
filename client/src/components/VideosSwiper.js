@@ -8,8 +8,10 @@ import { Link,useNavigate } from "react-router-dom";
 import ReactPlayer from "react-player";
 
 const VideosSwiper = ({ category }) => {
+
   const {_id,name,videos} = category;
   const navigate = useNavigate();
+
   return (
     <div>
       <div className="landing__page__headings">
