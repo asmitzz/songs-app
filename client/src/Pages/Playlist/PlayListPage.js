@@ -3,6 +3,7 @@ import { useVideos } from "../../contexts/VideosContextProvider";
 
 import {Link,useNavigate} from 'react-router-dom';
 import Toast from "../../utils/Toast";
+import "./Playlist.css";
 
 const PlayListPage = () => {
 

@@ -11,6 +11,8 @@ import Spinner from '../../utils/Spinner';
 import { useVideos } from '../../contexts/VideosContextProvider';
 import Toast from '../../utils/Toast';
 
+import "./Home.css";
+
 SwiperCore.use([Navigation, Pagination, Scrollbar, A11y]);
 
 const LandingPage = () => {

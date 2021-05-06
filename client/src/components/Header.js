@@ -2,6 +2,7 @@ import { useState } from "react";
 import {NavLink} from "react-router-dom";
 import {useAuth} from "../contexts/AuthContext";
 import Spinner from "../utils/Spinner";
+import "./Header.css";
 
 const Header = () => {
     const {isUserloggedIn,signout} = useAuth();

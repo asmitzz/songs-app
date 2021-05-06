@@ -5,6 +5,7 @@ import { useParams } from "react-router-dom";
 import { useVideos } from "../contexts/VideosContextProvider";
 
 import { Link,useNavigate } from 'react-router-dom';
+import "./SeeAllVideos.css";
 
 const SeeAllVideosPage = () => {
 

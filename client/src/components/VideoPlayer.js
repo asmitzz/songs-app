@@ -6,6 +6,7 @@ import Backdrop from "../utils/Backdrop/Backdrop";
 import {useAuth} from "../contexts/AuthContext";
 import axios from 'axios';
 import Toast from "../utils/Toast";
+import "./VideoPlayer.css";
 
 const VideoPlayer = () => {
     const {videoID} = useParams();

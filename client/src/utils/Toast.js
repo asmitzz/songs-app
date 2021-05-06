@@ -1,5 +1,6 @@
 import React from 'react';
 import Backdrop from "../utils/Backdrop/Backdrop";
+import "./Toast.css";
 
 const Toast = ({show,message,color,background,className,error,onClick}) => {
   return (

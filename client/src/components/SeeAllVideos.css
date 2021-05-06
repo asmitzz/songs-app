@@ -1,0 +1,57 @@
+.seeAllVideos__container{
+    margin-bottom: 4rem;
+    animation: move-right 0.6s 1 ease-in;
+ }
+ 
+ .seeAllVideos__container__header{
+   display: grid;
+   grid-template-columns: auto auto;
+   padding: 1rem 0;
+   color: var(--secondary);
+ }
+ 
+ .seeAllVideos__container__header .header__button{
+   color: var(--secondary);
+   background:var(--primary);
+   border: none;
+   font-size: 1.3rem;
+   text-align: left;
+   margin-left: 0.7rem;
+   cursor: pointer;
+ }
+ 
+ .seeAllVideos__container .cards{
+   display:grid;
+   grid-gap:15px;
+   justify-content: center;
+   color: var(--secondary);
+   grid-template-columns:repeat(auto-fill, 300px)
+ }
+ 
+ .seeAllVideos__container .cards .card{
+   height:180px
+ }
+ 
+ 
+ @media (max-width: 640px){
+   .seeAllVideos__container .cards{
+     grid-template-columns:0.98fr;
+   }
+   
+   .seeAllVideos__container{
+     margin-bottom: 4.5rem;
+  }
+ 
+  .nav-link .fas{
+   font-size: 1.1rem;
+ }
+ 
+ .header .logo__name{
+   font-size: 1.6rem;
+   margin-left: 1.4rem;
+ }
+ .logo-img{
+   right: 100px;
+   height: 38px;
+ }
+ }

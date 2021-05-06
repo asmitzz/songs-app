@@ -3,6 +3,8 @@ import ReactPlayer from "react-player";
 import { Link } from "react-router-dom";
 import { useVideos } from "../../contexts/VideosContextProvider";
 
+import "./SearchVideo.css";
+
 const SearchVideo = () => {
     useEffect( () => {
         window.scroll({

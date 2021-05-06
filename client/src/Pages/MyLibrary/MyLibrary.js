@@ -2,6 +2,7 @@ import React from "react";
 
 import { useNavigate } from "react-router-dom";
 import {useVideos} from "../../contexts/VideosContextProvider";
+import "./MyLibrary.css";
 
 const MyLibrary = () => {
     const navigate = useNavigate();

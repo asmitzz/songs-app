@@ -1,5 +1,5 @@
 import React from 'react';
-
+import "./Spinner.css";
 const Spinner = ({show,style}) => {
   return show ? (
     <div style={style} className="spinner__container">
