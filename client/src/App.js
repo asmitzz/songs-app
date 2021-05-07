@@ -16,8 +16,10 @@ import Login from './Auth/Login';
 import SignUp from './Auth/Signup';
 import MyLibrary from './Pages/MyLibrary/MyLibrary';
 import SearchVideo from './Pages/SearchVideo/SearchVideo';
+import {useAuth} from './contexts/AuthContext';
 
 const App = () => {
+  const {isUserloggedIn} = useAuth();
   return (
     <div className="App">
          
@@ -26,8 +28,8 @@ const App = () => {
             <Route path="/search" element={<SearchVideo/>}/>
             <Route path="/watch/:videoID" element={<VideoPlayer/>}/>
             <Route path="/videos/:categoryID" element={<SeeAllVideosPage/>}/>
-            <Route path="/login" element={<Login/>}/>
-            <Route path="/signup" element={<SignUp/>}/>
+           { !isUserloggedIn && <Route path="/login" element={<Login/>}/>}
+           { !isUserloggedIn && <Route path="/signup" element={<SignUp/>}/>}
 
             <PrivateRoute path="/playlist" element={<PlayListPage/>}/>
             <PrivateRoute path="/playlist/:playlistID" element={<ViewPlaylist/>}/>
