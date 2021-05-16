@@ -3,7 +3,7 @@ const app = express();
 const bodyParser = require("body-parser");
 const cors = require("cors");
 const dotenv = require("dotenv");
-const { initializeDB } = require("./mongoose")
+const { initializeDB } = require("./mongoose");
 
 // import my routes
 const userRoutes = require("./routes/user.routes");
