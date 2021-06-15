@@ -1,0 +1,71 @@
+
+.header{
+    width: 100%;
+    background:var(--primary);
+    color:var(--secondary);
+    display: flex;
+    justify-content:space-around;
+    align-items: center;
+    box-shadow: 1px 2px 10px rgba(0, 0, 0, 0.2);
+    padding:0.8rem 0;
+  }
+  
+  .header .header__link{
+     background:none;
+     text-decoration: none;
+     color:var(--secondary);
+  }
+  
+  .header .logo__name{
+    font-size:2rem;
+  }
+  
+  .header .signout__btn{
+    background:var(--primary);
+    border: none;
+    color:var(--secondary);
+    cursor: pointer;
+  }
+  
+  .nav{
+    background:var(--primary);
+    width: 100%;
+    padding:0.6rem 0;
+    z-index: 1;
+    position: fixed;
+    bottom:0;
+    box-shadow: 1px 2px 10px rgba(0, 0, 0, 0.5);
+  }
+  
+  .nav .nav-items{
+   display: flex;
+   align-items:center;
+   justify-content: space-around;
+   height:100%;
+   width: 100%;
+   margin:0;
+   padding:0;
+  }
+  
+  .nav .nav-item{
+   list-style: none;
+   color: var(--secondary);
+  }
+  
+  .nav-link{
+    text-decoration: none;
+    display: flex;
+    padding: 0;
+    flex-direction: column;
+    justify-content: center;
+    color: var(--secondary);
+    align-items: center;
+    font-size: 0.8rem;
+  }
+  
+  .nav-link .fas{
+    font-size: 1.1rem;
+    margin-bottom: 0.1rem;
+  }
+
+  

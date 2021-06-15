@@ -1,0 +1,69 @@
+.login__container{
+    width:70%;
+    margin:8% auto;
+    color: var(--secondary);
+  }
+  
+  .login__container .form__group{
+    margin: 0.5rem 0;
+  }
+  
+  .login__container .form__control{
+    width:100%;
+    border: none;
+    background: transparent;
+    border-bottom: 2px solid var(--secondary);
+    color:var(--secondary);
+    padding: 0.5rem;
+    margin: 0.5rem 0;
+  }
+
+  .login__container .form__control:focus{
+      outline: none;
+  }
+  
+  .login__container .form__label{
+    color:var(--secondary);
+    font-weight: 700;
+    padding: 0.4rem 0;
+  }
+  
+  .login__container .form__heading{
+    color: var(--secondary);
+    margin: 1rem 0;
+  }
+  
+  .login__container .signup__link{
+    text-decoration: none;
+    color: var(--secondary);
+    font-weight:700;
+  }
+  
+  .login__container .form__input__container{
+    position: relative;
+  }
+  
+  .login__container .fa{
+    position: absolute;
+    top: 20px;
+    right: 5px;
+    cursor: pointer;
+  }
+
+@media (max-width: 700px){
+    .login__container{
+      width: 90%;
+      margin:18% auto;
+    }
+}
+
+.secondary-btn{
+    font-weight: 700;
+    border-radius: 5px;
+    margin-bottom: 0.3rem;
+    padding:0.4rem 1rem;
+}
+
+
+    
+  
