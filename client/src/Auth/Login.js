@@ -48,40 +48,50 @@ const Login = () => {
        }
     }
 
-    const handleSubmit = async(e) => {
+    const handleSubmit = (e) => {
        e.preventDefault();
 
        if(formValidate(state)){
-          setSpinner(true)
-          try {
-            const {status,data } = await axios.post("https://hotmusic20-21.herokuapp.com/api/users/login",state);
-            
-             if( status === 200 ){
-               localStorage.setItem('authToken',JSON.stringify({login:true,data}));
-    
-               dispatch({ type:"LOGIN",payload:data })
-               navigate(path === null ? "/" : path.from)
-             }
-             setSpinner(false)
-
-          } catch (error) {
-            setSpinner(false)
-             const { status, data } = error.response;
-
-             if(status === 401){
-               setErrors(state => ({...state,password:data.message}))
-             }
-             else if(status === 404){
-               setErrors(state => ({...state,email:data.message}))
-             }
-          }
-          
+          login(state)
        }
+    }
+
+    const handleLoginAsGuest = () => {
+      setSpinner(true)
+      login({email:"asmitshrivastava8@gmail.com",password:"asmit123"})
+    }
+
+    async function login(state){
+      setSpinner(true)
+      try {
+        const {status,data } = await axios.post("https://hotmusic20-21.herokuapp.com/api/users/login",state);
+        
+         if( status === 200 ){
+           localStorage.setItem('authToken',JSON.stringify({login:true,data}));
+
+           dispatch({ type:"LOGIN",payload:data })
+           navigate(path === null ? "/" : path.from)
+         }
+         setSpinner(false)
+
+      } catch (error) {
+        setSpinner(false)
+         const { status, data } = error.response;
+
+         if(status === 401){
+           setErrors(state => ({...state,password:data.message}))
+         }
+         else if(status === 404){
+           setErrors(state => ({...state,email:data.message}))
+         }
+      }
+      
     }
   
     return (
+      <div>
+          <Spinner show={spinner}/>
       <div className="login__container">
-        <Spinner show={spinner}/>
         <form onSubmit={handleSubmit}>
             <h1 className="form__heading">LOGIN</h1>
             <div className="form__group">
@@ -106,6 +116,16 @@ const Login = () => {
             <input type="submit" className="secondary-btn" value="LOGIN"/>
         </form>
         <p><small>Don't have an account? <Link to="/signup" className="signup__link"><u>SIGN UP</u></Link></small></p>
+        <div>
+            <div className="separator">
+                 <div className="separator__line"></div>
+                 <div className="separator__text">OR</div>
+                 <div className="separator__line"></div>
+            </div>
+            <button onClick={handleLoginAsGuest} style={{display:"block",fontWeight:"600",width:"100%"}} className="primary-btn">Login as guest</button>
+        </div>
+
+      </div>
       </div>
 
     );

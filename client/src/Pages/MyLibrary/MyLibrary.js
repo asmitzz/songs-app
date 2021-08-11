@@ -17,17 +17,17 @@ const MyLibrary = () => {
                     <button className="edit__btn">EDIT PROFILE</button>
               </div>
               <div className="playlist__and__watchlater">
-                  <div className="section">
+                  <div className="section" onClick={() => navigate("/playlist")}>
                       <small>{playlists?.length}</small>
-                      <button className="playlist__btn" onClick={() => navigate("/playlist")}>PLAYLISTS</button>
+                      <small className="playlist__btn" >PLAYLISTS</small>
                   </div>
-                  <div className="section">
+                  <div className="section" onClick={() => navigate("/watchlater")}>
                       <small>{watchLater?.length}</small>
-                      <button className="watch__later__btn" onClick={() => navigate("/watchlater")}>WATCH LATER</button>
+                      <small className="watch__later__btn" >WATCH LATER</small>
                   </div>
-                  <div className="section">
+                  <div className="section"  onClick={() => navigate("/history")}>
                       <small>{history?.length}</small>
-                      <button className="watch__later__btn" onClick={() => navigate("/history")}>RECENTS</button>
+                      <small className="watch__later__btn">RECENTS</small>
                   </div>
               </div>
         </div>

@@ -32,6 +32,8 @@ body{
   border-radius:10px;
   color:var(--secondary);
   cursor: pointer;
+  transition:all 0.2s linear;
+  cursor: pointer;
 }
 
 .secondary-btn{
@@ -40,8 +42,21 @@ body{
   border: 1px solid var(--primary);
   border-radius:10px;
   color: var(--primary);
+  transition:all 0.2s linear;
   cursor: pointer;
 }
+
+.primary-btn:hover{
+  color:var(--primary);
+  background:var(--secondary);
+} 
+
+
+.secondary-btn:hover{
+  color:var(--secondary);
+  background:var(--primary);
+  border: 1px solid var(--secondary);
+} 
 
 .delete__btn{
   background:var(--primary);

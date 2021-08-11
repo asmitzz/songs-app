@@ -59,6 +59,16 @@
      justify-content: center;
      align-items: center;
      color:var(--secondary);
+     border:1px solid var(--secondary);
+     margin:0 0.3rem;
+     border-radius:20px;
+     padding:0.3rem;
+    cursor: pointer;
+    transition:all 0.2s linear;
+  }
+
+  .playlist__and__watchlater .section:hover{
+    opacity:0.6;
   }
   
   .playlist__btn,.watch__later__btn{

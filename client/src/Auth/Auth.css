@@ -1,7 +1,10 @@
 .login__container{
-    width:70%;
-    margin:8% auto;
+    position:absolute;
+    top:50%;
+    left:50%;
+    width:40%;
     color: var(--secondary);
+    transform:translate(-50%,-50%);
   }
   
   .login__container .form__group{
@@ -48,6 +51,26 @@
     top: 20px;
     right: 5px;
     cursor: pointer;
+  }
+
+  .login__container .separator{
+    display:flex;
+    padding:0.5rem 0;
+    align-items:center;
+    font-weight:600;
+    color:var(--secondary);
+    font-size:0.8rem;
+  }
+
+  .login__container .separator__line{
+    flex:1;
+    position:relative;
+    height:1px;
+    background:var(--secondary);
+  }
+  
+  .login__container .separator__text{
+    margin:0 0.5rem;
   }
 
 @media (max-width: 700px){
